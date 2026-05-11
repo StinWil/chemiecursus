@@ -1046,7 +1046,10 @@ export default function App() {
   // School-header masthead
   const masthead = (
     <div style={headerBar}>
-      <div style={{fontFamily:FONT_S,fontSize:18,fontWeight:700,letterSpacing:2,color:P.ink}}>
+      <div style={{fontFamily:FONT_S,fontSize:10,letterSpacing:4,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>
+        Sint-Jozefscollege · Aarschot
+      </div>
+      <div style={{fontFamily:FONT_S,fontSize:18,fontWeight:700,letterSpacing:2,color:P.ink,marginTop:1}}>
         SJCA <span style={{color:P.sepia,fontWeight:400}}>·</span> Chemie 6<sup>e</sup> middelbaar
       </div>
       <div style={{fontFamily:FONT_S,fontSize:10,fontStyle:'italic',color:P.faded,letterSpacing:1.5,marginTop:1}}>
