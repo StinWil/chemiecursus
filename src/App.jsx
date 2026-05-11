@@ -398,6 +398,272 @@ const STEPS = {
 '4.6':['Splits de reactie in oxidatie- en reductiehalfreactie.','Balanceer atomen — gebruik H<sub>2</sub>O en H<sup>+</sup> (zuur) of OH<sup>−</sup> (basisch).','Balanceer lading met e<sup>−</sup>, stel e<sup>−</sup> gelijk, tel halfreacties op.'],
 };
 
+// ── EXPANDED THEORY BULLETS (course-aligned) ──────────────────────────────────
+const TH_BULLETS = {
+'3.1':[
+'<b>Historisch:</b> een zuur werd herkend aan zure smaak, het kleuren van lakmoes naar rood, het bruisen met marmer en het oplossen van onedele metalen (ijzer, zink). Een base aan een zeepachtige bittere smaak en het kleuren van lakmoes naar blauw.',
+'<b>Svante Arrhenius (1884):</b> een zuur is een stof die in waterig milieu <b>ioniseert</b> tot H<sup>+</sup>-ionen en zuurrestionen — schema HZ → H<sup>+</sup> + Z<sup>−</sup>. Voorbeelden: HCl, H<sub>2</sub>SO<sub>4</sub>, HNO<sub>3</sub>.',
+'Zuren zijn sterk polaire stoffen met atoombinding; in een polair oplosmiddel (water) polariseren ze tot vrije <b>gehydrateerde</b> ionen. Dit proces noemen we ionisatie.',
+'Het zuurkarakter is te wijten aan vrije H<sup>+</sup>-ionen. In werkelijkheid bindt elk proton zich onmiddellijk aan een watermolecule tot het <b>oxoniumion</b> H<sub>3</sub>O<sup>+</sup> (overgang naar Brønsted-Lowry).',
+'Een Arrhenius-base = metaalhydroxide: MOH → M<sup>+</sup> + OH<sup>−</sup>. Voorbeelden: NaOH, KOH, Ca(OH)<sub>2</sub>. Hier spreekt men van <b>dissociatie</b>, want de ionen zaten al in het kristalrooster.',
+'Het basekarakter is te wijten aan vrije OH<sup>−</sup>-ionen. Tweewaardige basen (Ca(OH)<sub>2</sub>) en driewaardige basen (Al(OH)<sub>3</sub>) leveren meerdere OH<sup>−</sup> per formule-eenheid.',
+'<b>Sterke</b> zuren/basen ioniseren <b>volledig</b> (→ aflopende reactie); <b>zwakke</b> slechts gedeeltelijk (⇌ evenwicht).',
+'<b>Beperking van Arrhenius:</b> de theorie geldt enkel in waterig milieu. NH<sub>3</sub> is duidelijk een base maar bezit geen OH-groep — onverklaarbaar binnen dit kader. Sommige zouten geven zure of basische oplossingen, hoewel zouten in Arrhenius-zin neutraal zouden moeten zijn.',
+'<b>Indicatoren</b> bij Arrhenius: lakmoes (rood/blauw), fenolftaleïne (kleurloos/fuchsia), methyloranje (rood/geel), broomthymolblauw (geel/blauw).',
+],
+'3.2':[
+'<b>Brønsted & Lowry (1923)</b> formuleerden onafhankelijk van elkaar een ruimere theorie dan Arrhenius. Centraal staat de <b>protonoverdracht</b> tussen twee deeltjes, niet meer de ionvorming in water.',
+'<b>Brønsted-zuur</b> = protondonor — elk deeltje met een H-atoom dat als H<sup>+</sup> kan worden losgelaten. Moleculen (HCl, H<sub>2</sub>O, CH<sub>3</sub>COOH), positieve ionen (NH<sub>4</sub><sup>+</sup>, [Al(H<sub>2</sub>O)<sub>6</sub>]<sup>3+</sup>) of negatieve ionen (HSO<sub>4</sub><sup>−</sup>) kunnen optreden.',
+'<b>Brønsted-base</b> = protonacceptor — elk deeltje met een <b>vrij elektronenpaar</b> waarin een proton ingebouwd kan worden. Voorbeelden: NH<sub>3</sub>, H<sub>2</sub>O, OH<sup>−</sup>, CO<sub>3</sub><sup>2−</sup>, O<sup>2−</sup>.',
+'<b>Geconjugeerd paar:</b> een zuur en zijn geconjugeerde base verschillen <i>slechts</i> met één proton. Zuur − H<sup>+</sup> = geconjugeerde base; base + H<sup>+</sup> = geconjugeerd zuur.',
+'<b>Amfolyt</b> (= amfoteer deeltje): kan zowel proton afstaan als opnemen, naargelang de reactiepartner. Klassieke voorbeelden: H<sub>2</sub>O, HCO<sub>3</sub><sup>−</sup>, H<sub>2</sub>PO<sub>4</sub><sup>−</sup>, HSO<sub>4</sub><sup>−</sup>.',
+'<b>Protolysereactie</b> = uitwisseling van een proton tussen twee deeltjes. Een zuur kan slechts als zuur fungeren in <i>aanwezigheid</i> van een base — zuur-base bestaat niet op zichzelf.',
+'In elke protolysereactie zijn <b>twee geconjugeerde paren</b> betrokken: Zuur<sub>1</sub> + Base<sub>2</sub> ⇌ Base<sub>1</sub> + Zuur<sub>2</sub>.',
+'In water: H<sub>2</sub>O treedt op als base (vormt H<sub>3</sub>O<sup>+</sup>) of als zuur (vormt OH<sup>−</sup>) — de <b>amfolyt-natuur</b> van water is fundamenteel.',
+'<b>Evenwichtsligging:</b> de reactie verloopt steeds in de richting van het zwakste zuur en de zwakste base.',
+],
+'3.3':[
+'<b>Autoprotolyse van water:</b> tussen twee watermoleculen vindt spontaan protonoverdracht plaats — 2 H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + OH<sup>−</sup>. De ionisatiegraad bij 25°C is slechts 1,8·10<sup>−9</sup>: één op 500 miljoen watermoleculen.',
+'<b>Waterconstante K<sub>w</sub>:</b> [H<sub>3</sub>O<sup>+</sup>][OH<sup>−</sup>] = K<sub>w</sub> = 1,00·10<sup>−14</sup> mol²/L² bij 25°C. Geldig voor zuiver water én elke verdunde waterige oplossing.',
+'<b>K<sub>w</sub> is temperatuurafhankelijk:</b> de ionisatie is endotherm, dus stijgende temperatuur geeft een grotere K<sub>w</sub> (bij 40°C: K<sub>w</sub> ≈ 2,9·10<sup>−14</sup>). Daardoor is "neutraal pH = 7" enkel een afspraak voor 25°C.',
+'<b>Zuurconstante K<sub>z</sub>:</b> evenwichtsconstante voor de protolyse Z + H<sub>2</sub>O ⇌ B + H<sub>3</sub>O<sup>+</sup> — kwantitatieve maat voor de zuursterkte. Hoe groter K<sub>z</sub>, hoe sterker het zuur.',
+'<b>Baseconstante K<sub>b</sub>:</b> analoge constante voor B + H<sub>2</sub>O ⇌ Z + OH<sup>−</sup>. Hoe groter K<sub>b</sub>, hoe sterker de base.',
+'<b>K<sub>z</sub> · K<sub>b</sub> = K<sub>w</sub>:</b> voor elk geconjugeerd paar bij 25°C. Dwingt de koppeling af: een sterk zuur heeft altijd een zwakke geconjugeerde base.',
+'<b>pK-waarden:</b> pK<sub>z</sub> = −log(K<sub>z</sub>); kleinere pK<sub>z</sub> = sterker zuur. Praktisch makkelijker werken dan met machten van 10.',
+'<b>Nivellerend effect van water:</b> alle zuren sterker dan H<sub>3</sub>O<sup>+</sup> worden in water "omgezet" tot H<sub>3</sub>O<sup>+</sup> (sterke zuren). Het sterkste zuur dat in water kan <i>bestaan</i> is H<sub>3</sub>O<sup>+</sup>; de sterkste base is OH<sup>−</sup>.',
+'<b>Voorspelling reactieverloop (K-waarde):</b> K > 10<sup>3</sup> → aflopend; 10<sup>−3</sup> < K < 10<sup>3</sup> → evenwicht; K < 10<sup>−3</sup> → reactie verloopt nagenoeg niet. Memotechnisch: "de skiër daalt van sterk zuur naar sterke base".',
+'<b>Meerwaardige zuren</b> (H<sub>2</sub>SO<sub>4</sub>, H<sub>3</sub>PO<sub>4</sub>): elke proton-afgifte heeft een eigen K<sub>z</sub>, met K<sub>z1</sub> >> K<sub>z2</sub> >> K<sub>z3</sub> omdat protonafgifte uit een steeds negatievere rest moeilijker wordt.',
+],
+'3.4':[
+'De Deense chemicus <b>Søren Sørensen</b> bedacht in 1909 de grootheid pH (<i>potentia Hydrogenii</i>) om met de zeer kleine [H<sub>3</sub>O<sup>+</sup>]-waarden op een handzame schaal te kunnen werken.',
+'<b>Definitie:</b> pH = −log[H<sub>3</sub>O<sup>+</sup>] met [H<sub>3</sub>O<sup>+</sup>] in mol/L. Analoog: pOH = −log[OH<sup>−</sup>].',
+'<b>Fundamentele relatie:</b> pH + pOH = 14 bij 25°C — rechtstreeks gevolg van K<sub>w</sub> = 10<sup>−14</sup>.',
+'Klassering van waterige oplossingen bij 25°C: <b>zuur</b> pH < 7 · <b>neutraal</b> pH = 7 · <b>basisch</b> pH > 7.',
+'In zuiver water: [H<sub>3</sub>O<sup>+</sup>] = [OH<sup>−</sup>] = 10<sup>−7</sup> mol/L → pH = pOH = 7.',
+'Bij toevoeging van een zuur stijgt [H<sub>3</sub>O<sup>+</sup>]; via K<sub>w</sub> daalt [OH<sup>−</sup>] (evenwicht van H<sub>2</sub>O ioniseert minder). De toegevoegde H<sub>3</sub>O<sup>+</sup>-ionen dempen de eigen ionisatie van water — dit heet het <b>massa-effect</b>.',
+'De pH-schaal loopt praktisch tussen 0 en 14, maar extreme waarden zijn mogelijk: een 2 mol/L HCl-oplossing heeft pH ≈ −0,3.',
+'<b>Experimentele pH-bepaling:</b> universeelindicator (snel, benaderend), pH-meter met glaselektrode (nauwkeurig), zuur-base-indicatoren met omslaggebied.',
+'<b>Werking van indicatoren:</b> elke indicator is een zwak zuur HInd dat in evenwicht is met zijn geconjugeerde base Ind<sup>−</sup>, beiden met andere kleur. Het omslagpunt valt samen met pK<sub>z</sub>(indicator).',
+'<b>Tabel indicatoren:</b> methyloranje 3,1–4,4 (rood→geel) · lakmoes 4,5–8,3 (rood→blauw) · broomthymolblauw 6,0–7,6 (geel→blauw) · fenolftaleïne 8,2–10,0 (kleurloos→fuchsia).',
+],
+'3.5':[
+'<b>Eerste vraag bij elke pH-berekening:</b> is het zuur/base sterk of zwak? Dit bepaalt of we met een aflopende ionisatie of met een evenwichtsuitdrukking moeten werken.',
+'<b>Sterk zuur (éénwaardig)</b> — bv. HCl, HNO<sub>3</sub>: ioniseert volledig, dus [H<sub>3</sub>O<sup>+</sup>] = [Z]<sub>0</sub> en pH = −log(c).',
+'<b>Tweewaardig sterk zuur</b> (enkel H<sub>2</sub>SO<sub>4</sub>): de eerste protolyse is volledig, de tweede gedeeltelijk maar significant. In dit hoofdstuk benaderen we [H<sub>3</sub>O<sup>+</sup>] = 2·[H<sub>2</sub>SO<sub>4</sub>]<sub>0</sub>.',
+'<b>Sterke base (éénwaardig)</b> — bv. NaOH, KOH: [OH<sup>−</sup>] = [B]<sub>0</sub> → pOH = −log(c) → pH = 14 − pOH.',
+'<b>Meerwaardige sterke base</b> — bv. Ba(OH)<sub>2</sub>: [OH<sup>−</sup>] = n·[B]<sub>0</sub> waarbij n de waardigheid is.',
+'<b>Zwak zuur:</b> de protolyse is een evenwichtsreactie. Uit K<sub>z</sub> = [H<sub>3</sub>O<sup>+</sup>]²/[Z]<sub>0</sub> volgt [H<sub>3</sub>O<sup>+</sup>] = √(K<sub>z</sub>·c) — geldig als de ionisatie verwaarloosbaar is t.o.v. de aanvangsconcentratie.',
+'<b>Zwakke base:</b> analoog [OH<sup>−</sup>] = √(K<sub>b</sub>·c).',
+'<b>Verificatie van de benadering:</b> ionisatiegraad α = [H<sub>3</sub>O<sup>+</sup>]/c × 100% moet kleiner zijn dan 5%. Bij grote verdunning of zeer zwakke zuren is de benadering ongeldig en moet de volle vierkantsvergelijking opgelost worden.',
+'<b>Praktisch:</b> begin steeds met de stof, schrijf de protolysevergelijking, kies de formule, bereken, en eindig met een α-controle voor zwakke zuren/basen.',
+],
+'3.6':[
+'<b>Zuur-base-titratie:</b> kwantitatieve techniek waarbij een oplossing van gekende concentratie (de <b>titrator</b>, in de buret) druppelsgewijs wordt toegevoegd aan een gemeten volume van de onbekende oplossing tot het <b>equivalentiepunt</b> bereikt is.',
+'<b>Equivalentiepunt (EP):</b> het ogenblik waarop n(H<sub>3</sub>O<sup>+</sup>) = n(OH<sup>−</sup>) — alle zuur is precies geneutraliseerd door evenveel base. Dit is een stoichiometrisch punt, géén kleuromslag.',
+'<b>Titratieformule (valentiewet):</b> x · c<sub>z</sub> · V<sub>z</sub> = y · c<sub>b</sub> · V<sub>b</sub>, waarbij x = waardigheid van het zuur en y = waardigheid van de base.',
+'<b>Voorbeelden:</b> HCl + NaOH → c<sub>z</sub>V<sub>z</sub> = c<sub>b</sub>V<sub>b</sub> · H<sub>2</sub>SO<sub>4</sub> + 2NaOH → 2c<sub>z</sub>V<sub>z</sub> = c<sub>b</sub>V<sub>b</sub> · H<sub>3</sub>PO<sub>4</sub> + 3NH<sub>3</sub> → 3c<sub>z</sub>V<sub>z</sub> = c<sub>b</sub>V<sub>b</sub>.',
+'<b>pH van het EP:</b> niet altijd 7! Bij sterk zuur + sterke base → pH = 7. Bij zwak zuur + sterke base → het zout hydrolyseert tot een licht basische oplossing (pH > 7). Bij zwakke base + sterk zuur → pH < 7.',
+'<b>Kleuromslagpunt indicator</b> = de pH waarbij [HInd] = [Ind<sup>−</sup>] = pK<sub>z</sub>(indicator). Kies de indicator zodat haar omslag <i>binnen</i> de pH-sprong van de titratiecurve valt, zo dicht mogelijk bij het EP.',
+'<b>Titratiecurve:</b> grafiek van pH versus volume titrator. Vertoont een steile sprong rond het EP — bij sterk-sterk een sprong van ca. pH 3 tot 11; bij zwak-sterk een kortere sprong rond pH 7–11.',
+'<b>Halfweg het EP</b> bij titratie van zwak zuur met sterke base: pH = pK<sub>z</sub> — dan zijn [zuur] en [zout] gelijk, en de oplossing gedraagt zich als een ideale buffer (zie §3.7).',
+'<b>Praktisch:</b> bij sterk-sterk werken beide fenolftaleïne en methyloranje. Bij zwak zuur + sterke base: alleen fenolftaleïne (omslag pH 8–10). Bij zwakke base + sterk zuur: alleen methyloranje (omslag pH 3–4).',
+],
+'3.7':[
+'<b>Buffermengsel</b> = oplossing van een zwak zuur en zijn geconjugeerde base in vergelijkbare concentraties (typisch 1:10 tot 10:1). Doel: een stabiele pH die nauwelijks verandert bij toevoeging van een kleine hoeveelheid sterk zuur of sterke base, of bij verdunning.',
+'<b>Werking — verklaring via evenwichten:</b> in een CH<sub>3</sub>COOH/CH<sub>3</sub>COONa-buffer treden drie processen op:<br>(a) CH<sub>3</sub>COOH + H<sub>2</sub>O ⇌ CH<sub>3</sub>COO<sup>−</sup> + H<sub>3</sub>O<sup>+</sup><br>(b) CH<sub>3</sub>COONa → CH<sub>3</sub>COO<sup>−</sup> + Na<sup>+</sup> (volledig)<br>(c) CH<sub>3</sub>COO<sup>−</sup> + H<sub>2</sub>O ⇌ CH<sub>3</sub>COOH + OH<sup>−</sup>',
+'<b>Toevoegen van zuur:</b> evenwicht (a) verschuift naar links, de extra H<sub>3</sub>O<sup>+</sup> reageert met de overvloed aan CH<sub>3</sub>COO<sup>−</sup>. De pH daalt nauwelijks.',
+'<b>Toevoegen van base:</b> evenwicht (c) verschuift naar links, de extra OH<sup>−</sup> reageert met de overvloed aan CH<sub>3</sub>COOH. De pH stijgt nauwelijks.',
+'<b>Henderson-Hasselbalch:</b> pH = pK<sub>z</sub> + log([A<sup>−</sup>]/[HA]) — directe pH-berekening voor een buffer. Bij gelijke concentraties valt log(1) = 0 weg → pH = pK<sub>z</sub>.',
+'<b>Buffercapaciteit:</b> grootst bij gelijke concentraties van zuur en geconjugeerde base (pH = pK<sub>z</sub>) — de "ideale buffer". Stijgt ook met de totale concentratie: een 0,2 M buffer is dubbel zo veerkrachtig als een 0,1 M buffer.',
+'<b>Buffergebied:</b> typisch pH = pK<sub>z</sub> ± 1. Buiten dit interval daalt de capaciteit snel.',
+'<b>Bloedbuffer H<sub>2</sub>CO<sub>3</sub>/HCO<sub>3</sub><sup>−</sup>:</b> houdt de bloed-pH tussen 7,35 en 7,45. In het bloed is [HCO<sub>3</sub><sup>−</sup>] ≈ 20 × [H<sub>2</sub>CO<sub>3</sub>] — geoptimaliseerd om <i>zure</i> stofwisselingsproducten op te vangen.',
+'<b>Klinisch:</b> hyperventilatie blaast te veel CO<sub>2</sub> uit → evenwicht verschuift, pH stijgt → <b>respiratoire alkalose</b>. Hypoventilatie omgekeerd → <b>respiratoire acidose</b>. Andere fysiologische buffers: H<sub>2</sub>PO<sub>4</sub><sup>−</sup>/HPO<sub>4</sub><sup>2−</sup>, eiwitten, aminozuren.',
+'<b>Praktische toepassingen:</b> ijken van pH-meters, farmaceutische formuleringen, kleurstof- en metaalbedrijven, biochemische experimenten, enzymactiviteit.',
+],
+'4.1':[
+'<b>Twee soorten reacties:</b> bij een <i>ionuitwisselingsreactie</i> blijven alle oxidatiegetallen (OG) ongewijzigd; bij een <b>redoxreactie</b> verandert het OG van minstens twee elementen — er worden elektronen uitgewisseld.',
+'<b>Oxidatie</b> = OG stijgt = elektronen worden <b>afgegeven</b>. Het deeltje dat oxideert is de <b>reductor (RED)</b> = elektronendonor.',
+'<b>Reductie</b> = OG daalt = elektronen worden <b>opgenomen</b>. Het deeltje dat reduceert is de <b>oxidator (OX)</b> = elektronenacceptor.',
+'<b>Onthoud:</b> de reductor wordt zelf <i>geoxideerd</i>; de oxidator wordt zelf <i>gereduceerd</i>. Beide processen treden steeds gelijktijdig op — vandaar "redox" (reductie-oxidatie).',
+'<b>Elektronenbalans:</b> het aantal afgegeven elektronen is steeds gelijk aan het aantal opgenomen elektronen.',
+'<b>Analogie zuur-base ↔ redox:</b> zuur = protondonor — reductor = elektronendonor. Base = protonacceptor — oxidator = elektronenacceptor.',
+'<b>OG-regels:</b> vrij element = 0 · enkelvoudig ion = lading · ΣOG = 0 (molecule) of = lading (ion). O = −2 (uitzondering: peroxide −1). H = +1 (uitzondering: metaalhydride −1).',
+'<b>Redoxbrug:</b> visualisatiemethode waarbij men onder elk element het OG schrijft en met een pijlbrug aanduidt welk element oxideert (boven) en welk reduceert (onder), telkens met het aantal uitgewisselde elektronen.',
+'<b>Stoffen vs. deeltjes:</b> de termen oxidator/reductor slaan strikt op deeltjes. We noemen K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub> een oxidans omdat het de sterke oxidator Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> bevat; metalen zijn reductoren want hun OG kan enkel stijgen.',
+'<b>Ezelsbruggetje:</b> OIL RIG — <i>Oxidation Is Loss, Reduction Is Gain</i> (van elektronen).',
+],
+'4.2':[
+'<b>Spanningsreeks (verdringingsreeks):</b> rangschikking van metalen volgens hun neiging om elektronen af te staan, opgesteld door experimenteel te toetsen welk metaal welk ander uit oplossing kan verdringen.',
+'<b>Klassieke proef:</b> dompel een Zn-staafje in CuSO<sub>4</sub>-oplossing → Zn lost op, Cu zet zich af. Dompel Cu in ZnSO<sub>4</sub> → er gebeurt niets. Besluit: Zn is sterkere reductor dan Cu.',
+'<b>Reeks (boven → onder):</b> Ca, Na, Mg, Al, Zn, Fe, Sn, Pb, [H<sub>2</sub>], Cu, Ag, Hg, Au.',
+'<b>Onedele metalen</b> (bovenin) zijn sterke reductoren — hun overeenkomstige ionen zijn zwakke oxidatoren. <b>Edele metalen</b> (Au, Pt, Ag) zijn zwakke reductoren — hun ionen zijn sterke oxidatoren.',
+'<b>H<sub>2</sub> als referentie:</b> de enige niet-metaal in de reeks. Het redoxkoppel H<sub>3</sub>O<sup>+</sup>/H<sub>2</sub> dient als nulpunt (E<sup>0</sup> = 0,00 V) voor de kwantitatieve schaal in §4.3.',
+'<b>Diagonaalregel (voorspelling):</b> een redoxreactie tussen metaalatoom A (boven) en metaalion B<sup>n+</sup> (onder) verloopt <i>spontaan</i> — dalende groene lijn van RED naar OX in de tabel. Omgekeerde combinatie → geen spontane reactie.',
+'<b>Sterkste reductor / oxidator:</b> in de schoolreeks is Ca (of Mg) de sterkste reductor; Au<sup>3+</sup> de sterkste oxidator. Reactie tussen sterkste RED en sterkste OX heeft het grootst potentiaalverschil.',
+'<b>Praktische gevolgen:</b> ijzer roest in contact met koper (Fe is sterker reductor → wordt opgeoffert); galvanische bescherming van pijpleidingen door verteringselektroden van Zn of Mg; edele metalen komen in de natuur zelden in verbinding voor.',
+'<b>Redoxkoppel-notatie:</b> elke halfreactie wordt geschreven als reductie OX + n e<sup>−</sup> ⇌ RED, verkort genoteerd als OX/RED (bv. Cu<sup>2+</sup>/Cu, Zn<sup>2+</sup>/Zn).',
+'<b>Sterk OX → zwakke geconjugeerde RED</b> en omgekeerd — perfect analoog aan de zuur-base wereld.',
+],
+'4.3':[
+'<b>Normpotentiaal E<sup>0</sup>:</b> kwantitatieve maat voor de redoxsterkte van een halfreactie, gemeten als de spanning t.o.v. de standaardwaterstofelektrode (SHE) onder <i>normomstandigheden</i>.',
+'<b>Normomstandigheden:</b> T = 298 K (25°C), c = 1 mol/L, p = 1013 hPa. Door afspraak: E<sup>0</sup>(H<sub>3</sub>O<sup>+</sup>/H<sub>2</sub>) = 0,00 V.',
+'<b>Negatieve E<sup>0</sup>:</b> redoxkoppel bevat een sterkere reductor dan H<sub>2</sub> en een zwakkere oxidator dan H<sub>3</sub>O<sup>+</sup> (bv. Mg, Zn). <b>Positieve E<sup>0</sup>:</b> zwakkere RED, sterkere OX (bv. Cu, Ag).',
+'<b>Hoe lager (negatiever) E<sup>0</sup>, hoe sterker de reductor.</b> Hoe hoger (positiever) E<sup>0</sup>, hoe sterker de oxidator. Voorbeeld: E<sup>0</sup>(Li<sup>+</sup>/Li) = −3,02 V → Li is de sterkste reductor uit de tabel.',
+'<b>Bronspanning U<sub>b</sub>:</b> meetbaar potentiaalverschil tussen twee halfcellen — U<sub>b</sub> = E<sup>0</sup>(kathode) − E<sup>0</sup>(anode), waarbij de kathode (hogere E<sup>0</sup>) de reductie ondergaat en de anode (lagere E<sup>0</sup>) de oxidatie.',
+'<b>Spontaniteit:</b> U<sub>b</sub> > 0 betekent ΔG < 0, dus spontane redoxreactie. U<sub>b</sub> < 0 vereist energietoevoer (elektrolyse).',
+'<b>Belangrijke valkuil:</b> E<sup>0</sup> wordt <b>NIET</b> vermenigvuldigd met stoichiometrische coëfficiënten. E<sup>0</sup> is een intensieve grootheid, geen extensieve.',
+'<b>Wet van Nernst (uitbreiding):</b> in een werkelijke cel wijken de concentraties af van 1 mol/L; de reële potentiaal E volgt dan E = E<sup>0</sup> − (RT/nF) · ln(Q) — de potentiaal hangt af van de stand van het evenwicht.',
+'<b>Tabel met normpotentialen:</b> de schoolversie loopt globaal van Li<sup>+</sup>/Li (−3,02 V) tot F<sub>2</sub>/F<sup>−</sup> (+2,87 V). Voor metalen: Mg<sup>2+</sup>/Mg = −2,36 V; Zn<sup>2+</sup>/Zn = −0,76 V; Cu<sup>2+</sup>/Cu = +0,34 V; Au<sup>3+</sup>/Au = +1,50 V.',
+],
+'4.4':[
+'<b>Galvanische cel</b> = chemische stroombron: een toestel waarin een spontane redoxreactie chemische energie rechtstreeks omzet in elektrische energie (ΔG < 0, U<sub>b</sub> > 0).',
+'<b>Historisch:</b> Luigi Galvani (1737–1798) merkte op dat dode kikkerpoten samentrekken bij contact met twee verschillende metalen — hij dacht (foutief) aan "dierlijke elektriciteit". Alessandro Volta (1745–1827) ontdekte dat het potentiaalverschil tussen de metalen de oorzaak was, en bouwde in 1800 de eerste batterij (Volta-zuil). De eenheid "Volt" is naar hem genoemd.',
+'<b>Daniell-cel</b> (J.F. Daniell, 1836): de klassieke didactische cel. Bestaat uit twee <b>halfcellen</b> — een Zn-elektrode in ZnSO<sub>4</sub>-oplossing en een Cu-elektrode in CuSO<sub>4</sub>-oplossing — verbonden door een externe metaaldraad en een zoutbrug.',
+'<b>Anode (Zn):</b> Zn → Zn<sup>2+</sup> + 2e<sup>−</sup>. Oxidatie. Elektronen vloeien door de externe draad weg. De Zn-elektrode wordt aangevreten en is <b>negatief</b> geladen (galvanisch: anode = − pool).',
+'<b>Kathode (Cu):</b> Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu. Reductie. Elektronen komen vanuit de externe draad aan. De Cu-elektrode wordt aangeladen en is <b>positief</b> geladen.',
+'<b>Externe metaaldraad:</b> transporteert elektronen van anode naar kathode. Hierin kan een verbruiker (lamp, motor) of voltmeter geplaatst worden om de elektrische energie te benutten of te meten.',
+'<b>Zoutbrug (ionen-/elektrolytbrug):</b> U-vormige buis met geconcentreerde zoutoplossing (KNO<sub>3</sub>, KCl) in agar-gel. Compenseert de ladingsveranderingen — anionen migreren naar de anodecel (waar Zn<sup>2+</sup> ophoopt), kationen naar de kathodecel.',
+'<b>Zonder zoutbrug</b> stopt de reactie: zonder ionentransport zou de anodecel te positief en de kathodecel te negatief worden, en het potentiaalverschil zou de elektronenstroom onmiddellijk blokkeren.',
+'<b>Bronspanning Daniell:</b> U<sub>b</sub> = E<sup>0</sup>(Cu<sup>2+</sup>/Cu) − E<sup>0</sup>(Zn<sup>2+</sup>/Zn) = 0,34 − (−0,76) = +1,10 V.',
+'<b>Symbolische voorstelling:</b> anode | anode-opl. || kathode-opl. | kathode. Voorbeeld Daniell: <code>Zn | Zn<sup>2+</sup>(1M) || Cu<sup>2+</sup>(1M) | Cu</code>. Anode steeds links, kathode rechts; | = fasescheiding, || = zoutbrug.',
+'<b>Toepassingen in het dagelijkse leven:</b> alkalinebatterij (Zn-anode, MnO<sub>2</sub>-kathode), lithiumionbatterij (oplaadbaar, gsm/laptop), brandstofcel (H<sub>2</sub>+O<sub>2</sub>→H<sub>2</sub>O, duurzame mobiliteit), knoopcel.',
+'<b>Corrosie</b> is een ongewenste galvanische cel: ijzer in vochtige lucht vormt een microcel met opgeloste O<sub>2</sub> als oxidator → Fe<sup>2+</sup> ontstaat → uiteindelijk roest (Fe<sub>2</sub>O<sub>3</sub>·xH<sub>2</sub>O). Bescherming: coating, vertinning, verzinking (Zn als opofferende verteringselektrode), inox-legering (Fe+Cr+Ni).',
+],
+'4.5':[
+'<b>Elektrolyse</b> = gedwongen redoxreactie. Een externe spanningsbron dwingt een niet-spontane reactie (U<sub>b</sub> < 0, ΔG > 0) toch te verlopen door elektrische energie toe te voeren. Het tegenovergestelde van een galvanische cel.',
+'<b>Volgorde van gebeurtenissen — verschilt fundamenteel van galvanisch:</b> bij elektrolyse zijn de elektroden eerst geladen <i>door de externe bron</i>, en pas daarna treedt oxidatie/reductie op. Bij galvanisch komt eerst de redoxreactie, dan pas de lading.',
+'<b>Pooltekens omgekeerd:</b> de elektrode verbonden met de <b>+</b>pool van de spanningsbron wordt zelf positief (anode); de elektrode verbonden met de <b>−</b>pool wordt zelf negatief (kathode). Anionen migreren naar de + anode; kationen naar de − kathode.',
+'<b>Welke deeltjes reageren?</b> Net zoals bij protolyse: de sterkste aanwezige OX wordt gereduceerd aan de kathode; de sterkste aanwezige RED wordt geoxideerd aan de anode.',
+'<b>Belangrijke beperking:</b> bij elektrolyse moet een negatief deeltje aan de + anode geraken om te oxideren, en een positief deeltje aan de − kathode om te reduceren. Geladen deeltjes met "verkeerd" teken worden afgestoten.',
+'<b>Waterige oplossing:</b> H<sub>2</sub>O concurreert mee. Bij elektrolyse van NaCl(aq) wordt Na<sup>+</sup> NIET gereduceerd (E<sup>0</sup> = −2,71 V); in plaats daarvan wordt H<sub>2</sub>O gereduceerd tot H<sub>2</sub> aan de kathode. Aan de anode wordt Cl<sup>−</sup> wel geoxideerd tot Cl<sub>2</sub>.',
+'<b>Gesmolten zout (smeltelektrolyse):</b> geen water aanwezig → Na<sup>+</sup> wordt wél gereduceerd tot Na-metaal. Enige manier om sterke reductoren als Na, K, Mg, Al industrieel te bereiden.',
+'<b>Industriële toepassingen — productie:</b> Al uit Al<sub>2</sub>O<sub>3</sub> (Hall-Héroult), Cl<sub>2</sub> + NaOH + H<sub>2</sub> uit pekel (chloor-alkali), Na uit gesmolten NaCl (Downs-cel), H<sub>2</sub> uit water (energieopslag).',
+'<b>Industriële toepassingen — zuivering en oppervlaktebehandeling:</b> raffinage van koper (anode = ruw koper, kathode = zuiver koper); galvanisering (verchromen, vergulden, verzinken); aanbrengen van metaaloppervlakken in elektronica.',
+'<b>Energievoorwaarde:</b> U<sub>ext</sub> > |U<sub>b</sub>(cel)|; in de praktijk nog meer door <b>overpotentiaal</b> (extra spanning nodig wegens kinetische barrières — bv. waterelektrolyse vereist ~1,8 V terwijl theoretisch slechts 1,23 V).',
+],
+'4.6':[
+'<b>Doel:</b> een redoxreactievergelijking opstellen waarbij zowel de atomenbalans (massabehoud) als de ladingsbalans (ladingsbehoud) kloppen. Twee methodes: <b>redoxbrug</b> en <b>halfreacties</b>.',
+'<b>Methode redoxbrug — stappen:</b>',
+'① Schrijf het gekende gedeelte met deeltjes zoals ze werkelijk voorkomen (ionen voor zouten/zuren/basen, moleculen voor enkelvoudige stoffen en oxiden) — nog zonder coëfficiënten.',
+'② Bepaal het OG van elk atoom; identificeer welke elementen van OG veranderen.',
+'③ Bereken het aantal afgegeven en opgenomen elektronen; teken de redoxbrug.',
+'④ <b>Elektronenbalans (EB):</b> stel afgegeven = opgenomen via het kleinste gemeen veelvoud → coëfficiënten van RED en OX.',
+'⑤ <b>Ladingsbalans (LB):</b> in zuur milieu met H<sub>3</sub>O<sup>+</sup>, in basisch milieu met OH<sup>−</sup>.',
+'⑥ <b>Atomenbalans (AB):</b> sluiten met H<sub>2</sub>O. Resultaat: de essentiële reactievergelijking. Indien gevraagd → schrijf om naar de volledige stoffenreactievergelijking.',
+'<b>Methode halfreacties:</b> noteer reductie- en oxidatiehalfreactie afzonderlijk (uit de tabel), elk al gebalanceerd voor atomen en lading. Maak de e<sup>−</sup> gelijk door vermenigvuldiging, en tel beide halfreacties op. Schrap e<sup>−</sup> en gemeenschappelijke deeltjes uit linker- en rechterlid.',
+'<b>Voorbeeld (zuur milieu) MnO<sub>4</sub><sup>−</sup> + Fe<sup>2+</sup>:</b><br>Red: MnO<sub>4</sub><sup>−</sup> + 8H<sup>+</sup> + 5e<sup>−</sup> → Mn<sup>2+</sup> + 4H<sub>2</sub>O<br>Ox: Fe<sup>2+</sup> → Fe<sup>3+</sup> + e<sup>−</sup> &nbsp;(×5)<br>Totaal: MnO<sub>4</sub><sup>−</sup> + 5Fe<sup>2+</sup> + 8H<sup>+</sup> → Mn<sup>2+</sup> + 5Fe<sup>3+</sup> + 4H<sub>2</sub>O.',
+'<b>Voorspelling van het verloop:</b> ΔE<sup>0</sup> = E<sup>0</sup>(OX) − E<sup>0</sup>(RED). K is groot bij positieve ΔE<sup>0</sup> (aflopend), klein bij negatieve ΔE<sup>0</sup> (niet-opgaand), in de buurt van 1 bij kleine |ΔE<sup>0</sup>| (evenwicht).',
+'<b>Controle achteraf:</b> een gebalanceerde redoxvergelijking bevat geen losse e<sup>−</sup> meer; de som van de ladingen links = som rechts; aantal atomen per element klopt links = rechts.',
+],
+};
+
+// ── COMPACT SUMMARIES (abstract per section, 3–5 bullets) ─────────────────────
+const SUMM = {
+'3.1':[
+'Arrhenius (1884): zuur ioniseert in water tot H<sup>+</sup>; base dissocieert tot OH<sup>−</sup>.',
+'Sterk = volledige ionisatie (→); zwak = gedeeltelijke ionisatie (⇌).',
+'Theorie geldt enkel in waterig milieu; NH<sub>3</sub> past niet → aanleiding voor Brønsted-Lowry.',
+'Indicatoren visualiseren het zuur/basisch karakter via kleuromslag.',
+],
+'3.2':[
+'Brønsted-Lowry (1923): zuur = protondonor, base = protonacceptor.',
+'Elke protolyse bevat twee geconjugeerde paren — zuur en base verschillen met 1 H<sup>+</sup>.',
+'Amfolyten (H<sub>2</sub>O, HCO<sub>3</sub><sup>−</sup>) reageren naargelang de reactiepartner als zuur of als base.',
+'Evenwicht ligt aan de zwakste kant — sterkste zuur en sterkste base reageren volledig.',
+],
+'3.3':[
+'Autoprotolyse water: K<sub>w</sub> = [H<sub>3</sub>O<sup>+</sup>][OH<sup>−</sup>] = 10<sup>−14</sup> bij 25°C, T-afhankelijk.',
+'K<sub>z</sub>, K<sub>b</sub> meten zuur/base-sterkte; pK = −log(K) — kleinere pK = sterker.',
+'Per geconjugeerd paar: K<sub>z</sub>·K<sub>b</sub> = K<sub>w</sub>.',
+'Reactieverloop: K > 10<sup>3</sup> aflopend · 10<sup>−3</sup> < K < 10<sup>3</sup> evenwicht · K < 10<sup>−3</sup> niet.',
+'Water-nivellering: sterkste zuur in water = H<sub>3</sub>O<sup>+</sup>; sterkste base = OH<sup>−</sup>.',
+],
+'3.4':[
+'pH = −log[H<sub>3</sub>O<sup>+</sup>] (Sørensen, 1909); pOH analoog.',
+'pH + pOH = 14 (bij 25°C).',
+'Zuur pH < 7 · neutraal pH = 7 · basisch pH > 7.',
+'Experimentele bepaling: pH-meter (nauwkeurig) of universeelindicator (snel).',
+'Omslagpunt indicator = pK<sub>z</sub>(indicator).',
+],
+'3.5':[
+'Sterk zuur: pH = −log(c). Sterke base: pH = 14 + log(c).',
+'Meerwaardig sterk zuur (H<sub>2</sub>SO<sub>4</sub>): [H<sub>3</sub>O<sup>+</sup>] = 2·c<sub>0</sub>.',
+'Zwak zuur: [H<sub>3</sub>O<sup>+</sup>] = √(K<sub>z</sub>·c); idem voor zwakke base met K<sub>b</sub>.',
+'Controleer α = [H<sub>3</sub>O<sup>+</sup>]/c × 100% < 5% — anders benadering ongeldig.',
+],
+'3.6':[
+'Equivalentiepunt: n(H<sub>3</sub>O<sup>+</sup>) = n(OH<sup>−</sup>).',
+'Valentiewet: x·c<sub>z</sub>·V<sub>z</sub> = y·c<sub>b</sub>·V<sub>b</sub>.',
+'pH bij EP: sterk-sterk = 7; zwak-sterk > 7; sterk-zwak < 7.',
+'Indicatorkeuze: omslag moet vallen binnen de pH-sprong, dicht bij EP.',
+'Halfweg titratie zwak-sterk: pH = pK<sub>z</sub> (buffergedrag).',
+],
+'3.7':[
+'Buffer = zwak zuur HA + geconjugeerde base A<sup>−</sup> in vergelijkbare concentraties.',
+'Henderson-Hasselbalch: pH = pK<sub>z</sub> + log([A<sup>−</sup>]/[HA]).',
+'Capaciteit groot bij [A<sup>−</sup>] = [HA] (pH = pK<sub>z</sub>) en bij hoge concentraties.',
+'Bloedbuffer H<sub>2</sub>CO<sub>3</sub>/HCO<sub>3</sub><sup>−</sup> houdt pH op 7,35–7,45.',
+'Hyperventilatie → alkalose; hypoventilatie → acidose.',
+],
+'4.1':[
+'Redox = elektronen-uitwisseling; OG van minstens twee elementen verandert.',
+'Oxidatie = OG ↑ = e<sup>−</sup> afgegeven (reductor). Reductie = OG ↓ = e<sup>−</sup> opgenomen (oxidator).',
+'Analogie zuur-base: zuur ↔ reductor; base ↔ oxidator.',
+'Redoxbrug visualiseert OG-veranderingen en het aantal uitgewisselde elektronen.',
+'<b>KRAO</b> hieronder — basisregel voor alle elektrochemie.',
+],
+'4.2':[
+'Spanningsreeks rangschikt metalen op reductorkracht (verdringingsproef).',
+'Boven = onedel = sterke RED; onder = edel = zwakke RED. H<sub>2</sub> dient als referentie.',
+'Diagonaalregel: spontane redoxreactie tussen metaal-RED (boven) en metaal<sup>+</sup>-OX (onder).',
+'Pooltekens komen aan bod in §4.4–§4.5 — zie <b>KRAO/KPAN/KNAP</b> hieronder.',
+],
+'4.3':[
+'E<sup>0</sup> = normpotentiaal t.o.v. SHE (0,00 V) onder normomstandigheden.',
+'Hoger E<sup>0</sup> = sterker oxidator; lager E<sup>0</sup> = sterker reductor.',
+'U<sub>b</sub> = E<sup>0</sup>(kathode) − E<sup>0</sup>(anode); U<sub>b</sub> > 0 = spontaan.',
+'E<sup>0</sup> wordt NIET vermenigvuldigd met coëfficiënten.',
+],
+'4.4':[
+'Galvanische cel: spontane redox → elektrische energie (ΔG < 0).',
+'Anode (−): oxidatie; kathode (+): reductie. KRAO + KPAN.',
+'Zoutbrug compenseert ladingsverschil; zonder zoutbrug stopt de cel.',
+'U<sub>b</sub> = E<sup>0</sup>(kathode) − E<sup>0</sup>(anode); notatie: A | A<sup>n+</sup> || K<sup>m+</sup> | K.',
+'Toepassingen: batterijen, brandstofcellen; ongewenst → corrosie.',
+],
+'4.5':[
+'Elektrolyse: gedwongen redox → chemische energie (ΔG > 0).',
+'Externe spanningsbron laadt elektroden vóór de reactie. Pooltekens omgekeerd t.o.v. galvanisch.',
+'KRAO blijft: K = reductie, A = oxidatie. KNAP: K = −, A = +.',
+'Waterige oplossing: water concurreert met opgeloste ionen.',
+'Industrieel: productie Na, Al, Cl<sub>2</sub>, H<sub>2</sub>; galvanisering, raffinage.',
+],
+'4.6':[
+'Halfreactiemethode of redoxbrug.',
+'Stappen: ① schrijf · ② OG · ③ elektronenbalans · ④ ladingsbalans (H<sup>+</sup>/OH<sup>−</sup>) · ⑤ atomenbalans (H<sub>2</sub>O).',
+'Zuur milieu: gebruik H<sup>+</sup>/H<sub>3</sub>O<sup>+</sup>. Basisch milieu: gebruik OH<sup>−</sup>.',
+'Verloop voorspellen via ΔE<sup>0</sup> en K-waarde.',
+'Controle: geen losse e<sup>−</sup>, ladingen + atomen kloppen.',
+],
+};
+
+// ── KRAO / KPAN / KNAP — Nota Bene constants ─────────────────────────────────
+const KRAO = {
+title:'KRAO',
+rule:'<b>K</b>athode = <b>R</b>eductie &nbsp;·&nbsp; <b>A</b>node = <b>O</b>xidatie',
+detail:'Geldig voor <i>beide</i> celtypes — galvanische cel én elektrolyse. Wat aan de elektroden gebeurt is dezelfde half-reactie; enkel de pooltekens verschillen.',
+};
+const KPAN = {
+title:'KPAN — galvanische cel',
+rule:'<b>K</b>athode = <b>+</b>pool &nbsp;·&nbsp; <b>A</b>node = <b>−</b>pool',
+detail:'De oxidatie aan de anode stuwt elektronen weg → anode wordt negatief geladen. Reductie aan de kathode trekt elektronen aan → kathode wordt positief.',
+};
+const KNAP = {
+title:'KNAP — elektrolyse',
+rule:'<b>K</b>athode = <b>−</b>pool &nbsp;·&nbsp; <b>A</b>node = <b>+</b>pool',
+detail:'De externe spanningsbron <i>keert</i> de pooltekens om. Kationen migreren naar de − kathode (en reduceren); anionen migreren naar de + anode (en oxideren). Inverteert t.o.v. de galvanische cel.',
+};
+
 // ── FORMULARIUM ───────────────────────────────────────────────────────────────
 const FORM = {
 H3:{
@@ -630,6 +896,7 @@ export default function App() {
   const [secId, setSecId] = useState(null);
   const [open, setOpen] = useState({});
   const [stepsOpen, setStepsOpen] = useState(false);
+  const [secTab, setSecTab] = useState('theorie');
   const [ts, setTs] = useState(null);
   const [particles, setParticles] = useState([]);
 
@@ -660,7 +927,7 @@ export default function App() {
 
   const goHome = () => setScreen('home');
   const goChap = id => { setChId(id); setScreen('chapter'); };
-  const goSec = (cid, sid) => { setChId(cid); setSecId(sid); setOpen({}); setStepsOpen(false); setScreen('section'); };
+  const goSec = (cid, sid) => { setChId(cid); setSecId(sid); setOpen({}); setStepsOpen(false); setSecTab('theorie'); setScreen('section'); };
   const goForm = id => { setChId(id); setScreen('formularium'); };
   const goComp = () => setScreen('compare');
   const goTest = id => {
@@ -951,6 +1218,62 @@ export default function App() {
         <div style={{textAlign:'center',fontStyle:'italic',color:P.faded,fontSize:13,marginBottom:14,letterSpacing:0.3}}
           dangerouslySetInnerHTML={{__html:sec.sub}}/>
 
+        {/* Tab toggle — Theorie | Samenvatting */}
+        <div style={{display:'flex',justifyContent:'center',gap:0,marginBottom:14,borderBottom:`3px double ${P.rule}`,paddingBottom:6}}>
+          {[
+            {id:'theorie',lbl:'Theorie'},
+            {id:'samenvatting',lbl:'Samenvatting'},
+          ].map(t=>{
+            const active = secTab===t.id;
+            return (
+              <button key={t.id} onClick={()=>setSecTab(t.id)} style={{
+                background:active?P.ink:'transparent',
+                color:active?P.paper:P.ink,
+                border:`1px solid ${P.rule}`,
+                borderRadius:0,
+                padding:'6px 18px',
+                fontSize:11,
+                fontFamily:FONT_S,
+                fontWeight:500,
+                letterSpacing:2,
+                textTransform:'uppercase',
+                cursor:'pointer',
+                minHeight:32,
+                marginRight:t.id==='theorie'?-1:0,
+              }}>{t.lbl}</button>
+            );
+          })}
+        </div>
+
+        {secTab==='samenvatting' ? (
+          <>
+            {/* Abstract box */}
+            <div style={{
+              border:`1px solid ${P.rule}`,
+              borderTop:`3px double ${P.rule}`,
+              borderBottom:`3px double ${P.rule}`,
+              background:P.paperLight,
+              padding:'14px 18px',marginBottom:14,
+              position:'relative',
+            }}>
+              <div style={{
+                position:'absolute',top:-9,left:18,
+                background:P.paper,padding:'0 8px',
+                fontStyle:'italic',fontSize:11,color:P.sepia,letterSpacing:2,textTransform:'uppercase',
+              }}>— Abstract —</div>
+              {(SUMM[sec.id]||[]).map((b,i)=>(
+                <div key={i} style={{display:'flex',gap:10,marginBottom:i<SUMM[sec.id].length-1?8:0,fontSize:13.5,lineHeight:1.7}}>
+                  <span style={{color:P.sepia,flexShrink:0,fontWeight:700,fontFamily:FONT_M}}>▸</span>
+                  <span dangerouslySetInnerHTML={{__html:b}}/>
+                </div>
+              ))}
+            </div>
+            <div style={{textAlign:'center',fontStyle:'italic',color:P.faded,fontSize:11,letterSpacing:1.5}}>
+              Voor de uitgebreide bespreking: schakel naar <b>Theorie</b>.
+            </div>
+          </>
+        ) : (
+        <>
         {/* Extended theory paragraph */}
         {TH_EXT[sec.id] && (
           <p style={{
@@ -959,16 +1282,46 @@ export default function App() {
           }} dangerouslySetInnerHTML={{__html:TH_EXT[sec.id]}}/>
         )}
 
-        {/* Theorie bullets */}
+        {/* Theorie bullets — expanded (course-aligned) or fallback */}
         {subHeader('Kernpunten')}
         <div style={{paddingLeft:6}}>
-          {sec.th.map((b,i)=>(
-            <div key={i} style={{display:'flex',gap:10,marginBottom:8,fontSize:13.5,lineHeight:1.65}}>
-              <span style={{color:P.sepia,flexShrink:0,fontWeight:700,fontFamily:FONT_S}}>{['i.','ii.','iii.','iv.','v.','vi.'][i]||'·'}</span>
-              <span dangerouslySetInnerHTML={{__html:b}}/>
-            </div>
-          ))}
+          {(TH_BULLETS[sec.id]||sec.th).map((b,i)=>{
+            const numerals = ['i.','ii.','iii.','iv.','v.','vi.','vii.','viii.','ix.','x.','xi.','xii.'];
+            return (
+              <div key={i} style={{display:'flex',gap:10,marginBottom:8,fontSize:13.5,lineHeight:1.65}}>
+                <span style={{color:P.sepia,flexShrink:0,fontWeight:700,fontFamily:FONT_S,minWidth:24}}>{numerals[i]||'·'}</span>
+                <span dangerouslySetInnerHTML={{__html:b}}/>
+              </div>
+            );
+          })}
         </div>
+
+        {/* KRAO + KPAN/KNAP Nota Bene for §4.1 and §4.2 */}
+        {(sec.id==='4.1' || sec.id==='4.2') && (
+          <>
+            {subHeader('Nota Bene — pool- & elektrodewetten')}
+            {[KRAO,KPAN,KNAP].map((nb,i)=>(
+              <div key={i} style={{
+                border:`1.5px solid ${P.sepia}`,
+                borderTop:`3px double ${P.sepia}`,
+                background:P.paperLight,
+                padding:'12px 16px',marginBottom:10,
+                position:'relative',
+              }}>
+                <div style={{
+                  fontStyle:'italic',fontSize:10,color:P.sepia,letterSpacing:2,
+                  textTransform:'uppercase',marginBottom:6,
+                }}>
+                  Nota Bene — {nb.title}
+                </div>
+                <div style={{fontFamily:FONT_M,fontSize:14,color:P.ink,marginBottom:6,lineHeight:1.5}}
+                  dangerouslySetInnerHTML={{__html:nb.rule}}/>
+                <div style={{fontSize:12.5,lineHeight:1.6,color:P.faded,fontStyle:'italic'}}
+                  dangerouslySetInnerHTML={{__html:nb.detail}}/>
+              </div>
+            ))}
+          </>
+        )}
 
         {/* Galvanic cell SVG for 4.4 */}
         {sec.id==='4.4' && (
@@ -997,10 +1350,10 @@ export default function App() {
           color:P.ink,
         }} dangerouslySetInnerHTML={{__html:sec.fm.replace(/\n/g,'<br>')}}/>
 
-        {/* Stappenplan (uitklapbaar) */}
+        {/* § Methode (uitklapbaar stappenplan) */}
         {STEPS[sec.id] && (
           <>
-            {subHeader('Werkwijze')}
+            {subHeader('§ Methode')}
             <div style={{border:`1px solid ${P.margin}`,background:P.paperLight}}>
               <div onClick={()=>setStepsOpen(o=>!o)} style={{
                 padding:'10px 14px',cursor:'pointer',
@@ -1013,16 +1366,49 @@ export default function App() {
                 <span style={{color:P.sepia,fontSize:14,fontFamily:FONT_M}}>{stepsOpen?'▾':'▸'}</span>
               </div>
               {stepsOpen && (
-                <ol style={{margin:0,padding:'10px 14px 12px 30px',fontSize:13,lineHeight:1.7,color:P.ink}}>
-                  {STEPS[sec.id].map((s,i)=>(
-                    <li key={i} style={{marginBottom:6}}>
-                      <span dangerouslySetInnerHTML={{__html:s}}/>
-                    </li>
-                  ))}
-                </ol>
+                <div style={{padding:'10px 14px 14px'}}>
+                  <ol style={{margin:0,padding:'0 0 0 20px',fontSize:13,lineHeight:1.7,color:P.ink}}>
+                    {STEPS[sec.id].map((s,i)=>{
+                      const circled = ['①','②','③','④','⑤','⑥','⑦'][i];
+                      return (
+                        <li key={i} style={{listStyle:'none',marginBottom:8,paddingLeft:4}}>
+                          <span style={{color:P.sepia,fontFamily:FONT_M,fontWeight:700,marginRight:8}}>{circled}</span>
+                          <span dangerouslySetInnerHTML={{__html:s}}/>
+                        </li>
+                      );
+                    })}
+                  </ol>
+
+                  {/* KRAO/KPAN/KNAP repetitie voor galvanische cel en elektrolyse */}
+                  {(sec.id==='4.4' || sec.id==='4.5') && (
+                    <div style={{
+                      marginTop:14,paddingTop:12,
+                      borderTop:`1px dotted ${P.margin}`,
+                    }}>
+                      <div style={{fontStyle:'italic',fontSize:10,color:P.sepia,letterSpacing:2,textTransform:'uppercase',marginBottom:8}}>
+                        — Nota Bene — onthouden bij elke oefening —
+                      </div>
+                      {[KRAO, sec.id==='4.4'?KPAN:KNAP].map((nb,i)=>(
+                        <div key={i} style={{
+                          border:`1px solid ${P.sepia}`,
+                          background:P.paper,
+                          padding:'8px 12px',marginBottom:8,
+                        }}>
+                          <div style={{fontStyle:'italic',fontSize:10,color:P.sepia,letterSpacing:1.5,textTransform:'uppercase',marginBottom:4}}>
+                            {nb.title}
+                          </div>
+                          <div style={{fontFamily:FONT_M,fontSize:13,color:P.ink,lineHeight:1.5}}
+                            dangerouslySetInnerHTML={{__html:nb.rule}}/>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </>
+        )}
+        </>
         )}
 
         {/* Oefeningen */}
