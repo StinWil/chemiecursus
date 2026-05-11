@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Analytics } from '@vercel/analytics/react';
 
 // ── PALETTE (paper · ink · sepia) ────────────────────────────────────────────
 const P = {
@@ -792,7 +793,7 @@ export default function App() {
   );
 
   // ── HOME ──────────────────────────────────────────────────
-  if (screen==='home') return (
+  if (screen==='home') return (<>
     <div style={root}>
       {styleTag}{particlesLayer}
       {masthead}
@@ -852,10 +853,13 @@ export default function App() {
         </div>
       </div>
     </div>
+    <Analytics />
+
+    </>
   );
 
   // ── CHAPTER ──────────────────────────────────────────────
-  if (screen==='chapter') return (
+  if (screen==='chapter') return (<>
     <div style={root}>
       {styleTag}{particlesLayer}
       {masthead}
@@ -934,10 +938,13 @@ export default function App() {
         </div>
       </div>
     </div>
+    <Analytics />
+
+    </>
   );
 
   // ── SECTION ──────────────────────────────────────────────
-  if (screen==='section' && sec) return (
+  if (screen==='section' && sec) return (<>
     <div style={root}>
       {styleTag}{particlesLayer}
       {masthead}
@@ -1079,6 +1086,9 @@ export default function App() {
         </div>
       </div>
     </div>
+    <Analytics />
+
+    </>
   );
 
   // ── FORMULARIUM ──────────────────────────────────────────
@@ -1303,7 +1313,7 @@ export default function App() {
   }
 
   // ── COMPARE ──────────────────────────────────────────────
-  if (screen==='compare') return (
+  if (screen==='compare') return (<>
     <div style={root}>
       {styleTag}{particlesLayer}
       {masthead}
@@ -1359,6 +1369,9 @@ export default function App() {
         </div>
       </div>
     </div>
+    <Analytics />
+
+    </>
   );
 
   return null;
