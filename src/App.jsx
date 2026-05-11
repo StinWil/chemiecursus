@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-// ── PALETTE ──────────────────────────────────────────────────────────────────
+// ── PALETTE (paper · ink · sepia) ────────────────────────────────────────────
 const P = {
-  bg:'#fafaf8', card:'#fff', muted:'#f3f2ef',
-  bdr:'#e7e5e0', txt:'#1c1917', soft:'#78716c',
-  H3:{acc:'#b45309',tint:'#fffbeb',chip:'#fef3c7',bdr:'#fde68a'},
-  H4:{acc:'#0f766e',tint:'#f0fdfa',chip:'#ccfbf1',bdr:'#99f6e4'},
-  vio:{acc:'#7c3aed',tint:'#faf5ff',chip:'#ede9fe',bdr:'#c4b5fd'},
-  ok:{txt:'#15803d',bg:'#f0fdf4'},
-  err:{txt:'#b91c1c',bg:'#fef2f2'},
-  s1:'#f59e0b', s2:'#ea580c', s3:'#dc2626',
+  paper:'#f6f0e4',
+  paperDark:'#ede2c8',
+  paperLight:'#fbf6ec',
+  ink:'#1a1208',
+  sepia:'#7a1a1a',
+  sepiaSoft:'#a04545',
+  faded:'#5c4a3a',
+  margin:'#8b7355',
+  rule:'#3a2a18',
+  ok:'#2d5016',
+  okBg:'#e8e4cc',
+  err:'#7a1a1a',
+  errBg:'#efd9c8',
 };
+
+const FONT_S = "'Georgia','Times New Roman',serif";
+const FONT_M = "'Courier New','Courier',monospace";
 
 // ── SECTION DATA ──────────────────────────────────────────────────────────────
 const SEC = {
@@ -356,7 +364,41 @@ a:'① O: 4→2 → +2H<sub>2</sub>O rechts; H: 0→4 → voeg 4H<sub>2</sub>O l
 ],
 };
 
-// ── FORMULARIUM DATA ──────────────────────────────────────────────────────────
+// ── EXTENDED THEORY (paragrafen) ──────────────────────────────────────────────
+const TH_EXT = {
+'3.1':'De zuur-baseleer kreeg in 1884 een wetenschappelijk fundament door Svante Arrhenius. Zuren en basen werden herkend aan wat zij in water afgeven: zuren leveren H<sup>+</sup>-ionen, basen leveren OH<sup>−</sup>-ionen. De theorie verklaart elegant waarom zoutzuur en zwavelzuur elektrische geleiding vertonen, en waarom natronloog bijtend is. De definitie struikelt echter bij ammoniak (NH<sub>3</sub>): er is geen OH-groep aanwezig en toch verkleurt rood lakmoes blauw. Daarom verfijnen we de definitie verderop met Brønsted-Lowry.',
+'3.2':'In 1923 herzagen Brønsted en Lowry, onafhankelijk van elkaar, de definitie. Zuren zijn protondonoren, basen protonacceptoren. De aandacht verschuift van het oplosmiddel naar de protonoverdracht zelf, wat reacties buiten water mogelijk maakt. Elk zuur heeft zijn geconjugeerde base (één proton minder); elke base haar geconjugeerd zuur (één proton meer). Het evenwicht ligt altijd aan de zwakste kant van het paar.',
+'3.3':'De evenwichtsconstante K<sub>z</sub> meet hoeveel een zuur ioniseert in water: hoe groter K<sub>z</sub>, hoe sterker het zuur. Praktisch werkt men met pK<sub>z</sub> = −log K<sub>z</sub>, omdat de waarden over vele grootteorden lopen. Een vingerregel die altijd geldt: een sterk zuur geeft een zwakke geconjugeerde base — wat HCl makkelijk afstaat, neemt Cl<sup>−</sup> niet terug op. De gelijkheid K<sub>z</sub>·K<sub>b</sub> = K<sub>w</sub> drukt deze koppeling kwantitatief uit.',
+'3.4':'Water is geen passieve toeschouwer. Het ioniseert zelf in zeer kleine mate (2H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + OH<sup>−</sup>). Bij 25°C is het product van beide concentraties exact 10<sup>−14</sup> — dat is K<sub>w</sub>. De pH-schaal comprimeert [H<sub>3</sub>O<sup>+</sup>] logaritmisch: één eenheid verschil komt overeen met factor 10 in concentratie. Belangrijk: K<sub>w</sub> stijgt met de temperatuur; puur water bij 60°C heeft pH ≈ 6,5 maar blijft neutraal.',
+'3.5':'Bij elke pH-berekening is de eerste vraag: sterk of zwak? Sterke zuren ioniseren volledig, dus [H<sub>3</sub>O<sup>+</sup>] = c. Voor zwakke zuren geldt — als de ionisatie klein is (α < 5%) — de benadering [H<sub>3</sub>O<sup>+</sup>] = √(K<sub>z</sub>·c). Bij grote verdunning of zeer zwakke zuren breekt deze benadering, en moet de volle vierkantsvergelijking opgelost worden. Een goede reflex: na elke berekening α controleren.',
+'3.6':'De titratie is een van de oudste analytische technieken: stapsgewijs een gekende oplossing toevoegen tot het stoichiometrisch punt bereikt is. Bij sterk zuur + sterke base ligt het equivalentiepunt bij pH = 7; bij zwak zuur + sterke base verschuift het naar pH > 7 omdat de geconjugeerde base hydrolyseert. De keuze van de indicator is dus niet willekeurig — zij moet omslaan binnen de pH-sprong rond het equivalentiepunt.',
+'3.7':'Een buffer is een chemisch geheugen voor zuurgraad. Hij weerstaat pH-veranderingen, ten minste tot zijn capaciteit uitgeput is. Het werkingsprincipe rust op een evenwicht tussen een zwak zuur en zijn geconjugeerde base, die toegevoegd zuur of base kunnen neutraliseren zonder dat [H<sub>3</sub>O<sup>+</sup>] sterk verschuift. De Henderson-Hasselbalch-vergelijking voorspelt de pH uit de verhouding base/zuur. Het bloedbuffer (HCO<sub>3</sub><sup>−</sup>/CO<sub>2</sub>) houdt onze pH binnen 0,05 eenheden van 7,40.',
+'4.1':'Het oxidatiegetal is een boekhoudkundige fictie: we doen alsof alle bindingen ionisch zijn en kennen elke atoom de fictieve lading toe die dat zou opleveren. Het systeem laat ons elektronenoverdracht volgen, zelfs wanneer er geen duidelijke ionen ontstaan. De regels lopen via vaste afspraken (O = −2, H = +1, ΣOG = 0 of lading), met enkele uitzonderingen voor peroxide en metaalhydride. Het ezelsbruggetje OIL RIG houdt de richting helder.',
+'4.2':'De spanningsreeks ordent metalen volgens hun neiging om elektronen af te staan. Mg staat bovenaan als sterkste reductor; Au onderaan als zwakste. De diagonaalregel — oxidans boven reductor in de tabel betekent spontane reactie — is een snel hulpmiddel dat rust op de thermodynamica: ΔG < 0 als U<sub>b</sub> > 0. Historisch verklaart de reeks waarom ijzer roest in contact met koper (galvanische corrosie) en waarom edele metalen zo zeldzaam in verbinding voorkomen.',
+'4.3':'De normpotentiaal E<sup>0</sup> kwantificeert wat de spanningsreeks kwalitatief uitdrukt: hoe sterk een halfreactie elektronen wil opnemen, gemeten tegen de standaardwaterstofelektrode (SHE = 0,000 V). Bij standaardomstandigheden (25°C, 1 mol/L) is E<sup>0</sup> een tabelwaarde; in een werkelijke cel verandert de potentiaal volgens de Nernst-vergelijking. Let op: E<sup>0</sup> is een intensieve grootheid en mag NIET vermenigvuldigd worden met stoichiometrische coëfficiënten.',
+'4.4':'Alessandro Volta bouwde in 1800 de eerste galvanische cel — de zuil van Volta — door schijfjes Zn en Cu te stapelen met vochtig vilt ertussen. Wat hij gerealiseerd had, was een directe omzetting van chemische in elektrische energie. Modern: twee halfcellen, één met oxidatie (anode, −), één met reductie (kathode, +), verbonden via een externe draad voor elektronen en een zoutbrug voor ionen. De zoutbrug is essentieel: zonder ionentransport legt de ladingscheiding de reactie onmiddellijk stil.',
+'4.5':'Elektrolyse is de spiegelbeeldige zus van de galvanische cel: een externe spanningsbron dwingt een niet-spontane reactie door. De pooltekens keren om — anode = (+), kathode = (−) — omdat de externe bron de elektronenstroom oplegt. Industrieel onmisbaar: productie van aluminium uit Al<sub>2</sub>O<sub>3</sub>, van chloor en NaOH uit pekel, van waterstof uit water. Bij waterige oplossingen concurreert water met de opgeloste ionen: voor metallisch Na heb je gesmolten NaCl nodig, niet zoutwater.',
+'4.6':'Het balanceren van redoxreacties dwingt twee evenwichten af: de massabalans (atomen) én de ladingsbalans (elektronen). De halfreactiemethode splitst eerst de reactie in oxidatie en reductie, balanceert beide apart, en stelt het aantal e<sup>−</sup> gelijk vóór de samenvoeging. In zuur milieu vult H<sub>2</sub>O de O-atomen aan en H<sup>+</sup> de H-atomen; in basisch milieu komen OH<sup>−</sup>-ionen in het spel. Een gebalanceerde redoxvergelijking bevat geen losse e<sup>−</sup> meer.',
+};
+
+// ── STAPPENPLANNEN ────────────────────────────────────────────────────────────
+const STEPS = {
+'3.1':['Identificeer of de stof zuur (geeft H<sup>+</sup>) of base (geeft OH<sup>−</sup>) is.','Bepaal sterk of zwak — kies de juiste pijl (→ of ⇌).','Bij meerwaardige zuren: schrijf elke ionisatiestap apart.'],
+'3.2':['Spot de protondonor (zuur) en de protonacceptor (base) in de reactie.','Vorm de geconjugeerde paren: zuur − H<sup>+</sup> = geconj. base.','Markeer beide paren in de evenwichtsvergelijking.'],
+'3.3':['Noteer de evenwichtsuitdrukking voor K<sub>z</sub> of K<sub>b</sub>.','Vul concentraties in vanuit een ICE-tabel indien nodig.','Vergelijk pK<sub>z</sub>-waarden voor de sterktevolgorde — kleiner pK<sub>z</sub> = sterker.'],
+'3.4':['Identificeer wat gegeven is: [H<sub>3</sub>O<sup>+</sup>], [OH<sup>−</sup>], pH of pOH.','Gebruik K<sub>w</sub> = 10<sup>−14</sup> om tussen [H<sub>3</sub>O<sup>+</sup>] en [OH<sup>−</sup>] om te zetten.','Pas pH + pOH = 14 toe voor de complementaire schaal; controleer zuur/basisch.'],
+'3.5':['Klassificeer: sterk of zwak zuur/base.','Pas de juiste formule toe — sterk: pH = −log(c); zwak: [H<sub>3</sub>O<sup>+</sup>] = √(K<sub>z</sub>·c).','Verifieer ionisatiegraad α = [H<sub>3</sub>O<sup>+</sup>]/c × 100% < 5%.'],
+'3.6':['Schrijf de valentiewet: n<sub>z</sub>·c<sub>z</sub>·V<sub>z</sub> = n<sub>b</sub>·c<sub>b</sub>·V<sub>b</sub>.','Vul de gekende waarden in — let op de valentie n.','Los algebraïsch op naar de onbekende; kies een passende indicator.'],
+'3.7':['Identificeer het zwak zuur HA en de geconjugeerde base A<sup>−</sup>.','Pas Henderson-Hasselbalch toe: pH = pK<sub>z</sub> + log([A<sup>−</sup>]/[HA]).','Bij toevoeging: pas n-waarden eerst aan, dan opnieuw berekenen.'],
+'4.1':['Pas de standaardregels toe: O = −2, H = +1, vrij element = 0.','Stel ΣOG = 0 voor moleculen, ΣOG = lading voor ionen.','Los algebraïsch op naar het onbekende OG.'],
+'4.2':['Zoek beide E<sup>0</sup>-waarden op in de spanningsreeks.','Pas de diagonaalregel toe: oxidans boven reductor → spontaan.','Bereken U<sub>b</sub> = E<sup>0</sup>(kathode) − E<sup>0</sup>(anode); > 0 bevestigt spontaniteit.'],
+'4.3':['Identificeer de kathode (hoogste E<sup>0</sup>, reductie) en anode (laagste E<sup>0</sup>, oxidatie).','Schrijf de halfreacties — vermenigvuldig E<sup>0</sup> NIET met coëfficiënten.','U<sub>b</sub> = E<sup>0</sup>(kathode) − E<sup>0</sup>(anode); teken bepaalt spontaniteit.'],
+'4.4':['Wijs anode (lagere E<sup>0</sup>, oxidatie, −) en kathode (hogere E<sup>0</sup>, reductie, +) aan.','Schrijf beide halfreacties en vermenigvuldig zodat e<sup>−</sup> gelijk zijn.','Symbolische notatie: anode | anode-opl. || kathode-opl. | kathode.'],
+'4.5':['Bevestig dat de reactie niet-vrijwillig is — U<sub>ext</sub> > U<sub>b</sub>(cel).','Keer de pooltekens om: anode = (+), kathode = (−).','Bij waterige oplossing: controleer welke deeltjes water verslaan in elektrolyse.'],
+'4.6':['Splits de reactie in oxidatie- en reductiehalfreactie.','Balanceer atomen — gebruik H<sub>2</sub>O en H<sup>+</sup> (zuur) of OH<sup>−</sup> (basisch).','Balanceer lading met e<sup>−</sup>, stel e<sup>−</sup> gelijk, tel halfreacties op.'],
+};
+
+// ── FORMULARIUM ───────────────────────────────────────────────────────────────
 const FORM = {
 H3:{
 fmls:[
@@ -375,7 +417,7 @@ tabs:[
 ['Zoutzuur','HCl'],['Broomwaterstof','HBr'],['Joodwaterstof','HI'],
 ['Salpeterzuur','HNO<sub>3</sub>'],['Zwavelzuur (1e stap)','H<sub>2</sub>SO<sub>4</sub>'],['Perchloorzuur','HClO<sub>4</sub>'],
 ]},
-{title:'Zwakke zuren — Kz-waarden (tabellenbundel, 25°C)',heads:['Stof','Formule','K<sub>z</sub>','pK<sub>z</sub>'],rows:[
+{title:'Zwakke zuren — K<sub>z</sub>-waarden (tabellenbundel, 25°C)',heads:['Stof','Formule','K<sub>z</sub>','pK<sub>z</sub>'],rows:[
 ['Mierenzuur','HCOOH','1,77×10<sup>−4</sup>','3,75'],
 ['Azijnzuur','CH<sub>3</sub>COOH','1,74×10<sup>−5</sup>','4,76'],
 ['Waterstofhypochloriet','HClO','2,88×10<sup>−8</sup>','7,54'],
@@ -490,444 +532,834 @@ const COMPARE=[
 {r:'Toepassing',g:'Batterij, brandstofcel',e:'Galvanisering, productie Na/Cl<sub>2</sub>/Al/H<sub>2</sub>'},
 ];
 
-// ── STAR STYLES ───────────────────────────────────────────────────────────────
+// ── STAR STYLES (ster-labels) ─────────────────────────────────────────────────
 const STAR={
-1:{lbl:'★ Basis',c:'#f59e0b',bg:'#fef9c3'},
-2:{lbl:'★★ Uitdagend',c:'#ea580c',bg:'#fff7ed'},
-3:{lbl:'★★★ Expert',c:'#dc2626',bg:'#fef2f2'},
+1:{lbl:'★ basis',c:P.faded},
+2:{lbl:'★★ uitdagend',c:P.sepia},
+3:{lbl:'★★★ expert',c:P.sepia,bold:true},
 };
+
+// ── GALVANIC CELL SVG ─────────────────────────────────────────────────────────
+function GalvanicCell(){
+  return (
+    <svg viewBox="0 0 420 260" style={{width:'100%',maxWidth:520,display:'block',margin:'8px auto'}} xmlns="http://www.w3.org/2000/svg">
+      {/* External wire */}
+      <path d="M 95 70 L 95 35 L 325 35 L 325 70" stroke={P.ink} strokeWidth="1.5" fill="none"/>
+      {/* Voltmeter */}
+      <circle cx="210" cy="35" r="16" fill={P.paper} stroke={P.ink} strokeWidth="1.5"/>
+      <text x="210" y="40" textAnchor="middle" fontFamily={FONT_S} fontSize="14" fill={P.sepia} fontStyle="italic">V</text>
+      {/* e- direction label */}
+      <text x="160" y="26" textAnchor="middle" fontFamily={FONT_S} fontSize="10" fill={P.sepia} fontStyle="italic">⟵ e⁻</text>
+      <text x="260" y="26" textAnchor="middle" fontFamily={FONT_S} fontSize="10" fill={P.sepia} fontStyle="italic">e⁻ ⟶</text>
+
+      {/* Left beaker (anode) */}
+      <path d="M 50 80 L 50 215 L 140 215 L 140 80" stroke={P.ink} strokeWidth="1.5" fill="none"/>
+      {/* Liquid level */}
+      <path d="M 50 110 Q 95 105 140 110 L 140 215 L 50 215 Z" fill={P.paperDark} opacity="0.5"/>
+      {/* hatching for liquid */}
+      <line x1="55" y1="135" x2="135" y2="135" stroke={P.margin} strokeWidth="0.4" strokeDasharray="2 3"/>
+      <line x1="55" y1="160" x2="135" y2="160" stroke={P.margin} strokeWidth="0.4" strokeDasharray="2 3"/>
+      <line x1="55" y1="185" x2="135" y2="185" stroke={P.margin} strokeWidth="0.4" strokeDasharray="2 3"/>
+      {/* Zn electrode */}
+      <rect x="90" y="70" width="10" height="125" fill={P.faded} stroke={P.ink} strokeWidth="1"/>
+      <text x="95" y="235" textAnchor="middle" fontFamily={FONT_S} fontSize="11" fill={P.ink}>Zn (−)</text>
+      <text x="95" y="248" textAnchor="middle" fontFamily={FONT_S} fontSize="9" fontStyle="italic" fill={P.sepia}>anode · oxidatie</text>
+      <text x="95" y="100" textAnchor="middle" fontFamily={FONT_S} fontSize="9" fill={P.margin}>ZnSO₄(aq)</text>
+
+      {/* Right beaker (kathode) */}
+      <path d="M 280 80 L 280 215 L 370 215 L 370 80" stroke={P.ink} strokeWidth="1.5" fill="none"/>
+      <path d="M 280 110 Q 325 105 370 110 L 370 215 L 280 215 Z" fill={P.paperDark} opacity="0.5"/>
+      <line x1="285" y1="135" x2="365" y2="135" stroke={P.margin} strokeWidth="0.4" strokeDasharray="2 3"/>
+      <line x1="285" y1="160" x2="365" y2="160" stroke={P.margin} strokeWidth="0.4" strokeDasharray="2 3"/>
+      <line x1="285" y1="185" x2="365" y2="185" stroke={P.margin} strokeWidth="0.4" strokeDasharray="2 3"/>
+      {/* Cu electrode */}
+      <rect x="320" y="70" width="10" height="125" fill={P.sepia} stroke={P.ink} strokeWidth="1"/>
+      <text x="325" y="235" textAnchor="middle" fontFamily={FONT_S} fontSize="11" fill={P.ink}>Cu (+)</text>
+      <text x="325" y="248" textAnchor="middle" fontFamily={FONT_S} fontSize="9" fontStyle="italic" fill={P.sepia}>kathode · reductie</text>
+      <text x="325" y="100" textAnchor="middle" fontFamily={FONT_S} fontSize="9" fill={P.margin}>CuSO₄(aq)</text>
+
+      {/* Salt bridge */}
+      <path d="M 140 95 L 140 75 L 280 75 L 280 95" stroke={P.ink} strokeWidth="1.5" fill="none"/>
+      <path d="M 140 95 L 280 95" stroke={P.ink} strokeWidth="1.5" strokeDasharray="0" fill="none"/>
+      <text x="210" y="68" textAnchor="middle" fontFamily={FONT_S} fontSize="10" fontStyle="italic" fill={P.sepia}>zoutbrug · KNO₃</text>
+
+      {/* Animated electrons in external wire */}
+      <circle r="2.6" fill={P.sepia}>
+        <animateMotion dur="2.4s" repeatCount="indefinite" path="M 95 70 L 95 35 L 325 35 L 325 70"/>
+      </circle>
+      <circle r="2.6" fill={P.sepia}>
+        <animateMotion dur="2.4s" begin="0.4s" repeatCount="indefinite" path="M 95 70 L 95 35 L 325 35 L 325 70"/>
+      </circle>
+      <circle r="2.6" fill={P.sepia}>
+        <animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite" path="M 95 70 L 95 35 L 325 35 L 325 70"/>
+      </circle>
+      <circle r="2.6" fill={P.sepia}>
+        <animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M 95 70 L 95 35 L 325 35 L 325 70"/>
+      </circle>
+      <circle r="2.6" fill={P.sepia}>
+        <animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite" path="M 95 70 L 95 35 L 325 35 L 325 70"/>
+      </circle>
+      <circle r="2.6" fill={P.sepia}>
+        <animateMotion dur="2.4s" begin="2.0s" repeatCount="indefinite" path="M 95 70 L 95 35 L 325 35 L 325 70"/>
+      </circle>
+
+      {/* Salt bridge ions */}
+      <circle r="2" fill={P.ink} opacity="0.6">
+        <animateMotion dur="3s" repeatCount="indefinite" path="M 280 85 L 140 85"/>
+      </circle>
+      <circle r="2" fill={P.ink} opacity="0.6">
+        <animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M 140 90 L 280 90"/>
+      </circle>
+
+      {/* Ion movement in solutions */}
+      <circle r="1.8" fill={P.sepia} opacity="0.5">
+        <animateMotion dur="4s" repeatCount="indefinite" path="M 95 195 Q 110 170 95 145 Q 80 170 95 195"/>
+      </circle>
+      <circle r="1.8" fill={P.sepia} opacity="0.5">
+        <animateMotion dur="4s" begin="2s" repeatCount="indefinite" path="M 325 195 Q 340 170 325 145 Q 310 170 325 195"/>
+      </circle>
+    </svg>
+  );
+}
 
 // ── MAIN COMPONENT ────────────────────────────────────────────────────────────
 export default function App() {
-const [course, setCourse] = useState('CHE2');
-const [screen, setScreen] = useState('home');
-const [chId, setChId] = useState(null);
-const [secId, setSecId] = useState(null);
-const [open, setOpen] = useState({});
-const [ts, setTs] = useState(null);
+  const [course, setCourse] = useState('CHE2');
+  const [screen, setScreen] = useState('home');
+  const [chId, setChId] = useState(null);
+  const [secId, setSecId] = useState(null);
+  const [open, setOpen] = useState({});
+  const [stepsOpen, setStepsOpen] = useState(false);
+  const [ts, setTs] = useState(null);
+  const [particles, setParticles] = useState([]);
 
-const secs = chId ? SEC[chId] : [];
-const sec = secs.find(s => s.id === secId) || null;
-const col = chId === 'H3' ? P.H3 : P.H4;
+  // Particle effect on screen change
+  useEffect(()=>{
+    const baseId = Date.now();
+    const newParticles = Array.from({length:24},(_,i)=>{
+      const angle = Math.random()*Math.PI*2;
+      const dist = 40 + Math.random()*180;
+      return {
+        id:baseId+i,
+        dx:Math.cos(angle)*dist,
+        dy:Math.sin(angle)*dist,
+        size:1.5+Math.random()*3,
+        delay:Math.random()*120,
+        rot:Math.random()*360,
+      };
+    });
+    setParticles(newParticles);
+    const t = setTimeout(()=>setParticles([]),1000);
+    return ()=>clearTimeout(t);
+  },[screen,secId,chId]);
 
-const toggle = k => setOpen(o => ({...o,[k]:!o[k]}));
+  const secs = chId ? SEC[chId] : [];
+  const sec = secs.find(s => s.id === secId) || null;
 
-const goHome = () => setScreen('home');
-const goChap = id => { setChId(id); setScreen('chapter'); };
-const goSec = (cid, sid) => { setChId(cid); setSecId(sid); setOpen({}); setScreen('section'); };
-const goForm = id => { setChId(id); setScreen('formularium'); };
-const goComp = () => setScreen('compare');
-const goTest = id => {
-  const qs = [...TQ[id]].sort(() => Math.random()-0.5).slice(0,5);
-  setTs({qs, cur:0, att:0, sel:null, fb:null, res:[]});
-  setChId(id); setScreen('test');
-};
+  const toggle = k => setOpen(o => ({...o,[k]:!o[k]}));
 
-const testSel = i => { if (ts.fb==='ok'||ts.fb==='w2') return; setTs(p=>({...p,sel:i})); };
-const testCheck = () => {
-  if (ts.sel===null||ts.fb==='ok'||ts.fb==='w2') return;
-  const q = ts.qs[ts.cur];
-  if (ts.sel===q.c) { setTs(p=>({...p, fb:'ok', res:[...p.res,{correct:true,q,sel:p.sel}]})); }
-  else if (ts.att===0) { setTs(p=>({...p, fb:'w1', att:1, sel:null})); }
-  else { setTs(p=>({...p, fb:'w2', res:[...p.res,{correct:false,q,sel:p.sel}]})); }
-};
-const testNext = () => {
-  if (ts.cur===4) { setTs(p=>({...p,fb:'done'})); }
-  else { setTs(p=>({...p,cur:p.cur+1,att:0,sel:null,fb:null})); }
-};
+  const goHome = () => setScreen('home');
+  const goChap = id => { setChId(id); setScreen('chapter'); };
+  const goSec = (cid, sid) => { setChId(cid); setSecId(sid); setOpen({}); setStepsOpen(false); setScreen('section'); };
+  const goForm = id => { setChId(id); setScreen('formularium'); };
+  const goComp = () => setScreen('compare');
+  const goTest = id => {
+    const qs = [...TQ[id]].sort(() => Math.random()-0.5).slice(0,5);
+    setTs({qs, cur:0, att:0, sel:null, fb:null, res:[]});
+    setChId(id); setScreen('test');
+  };
 
-// ── STYLES ────────────────────────────────────────────────
-const root = {height:'100dvh',background:P.bg,fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",display:'flex',flexDirection:'column',overflow:'hidden',color:P.txt,fontSize:15};
-const hdr = {padding:'10px 14px',borderBottom:`1px solid ${P.bdr}`,background:P.card,flexShrink:0,display:'flex',alignItems:'center',gap:10};
-const body = {flex:1,overflowY:'auto',padding:14,paddingBottom:32};
-const card = (extra={}) => ({background:P.card,borderRadius:12,border:`1px solid ${P.bdr}`,padding:14,marginBottom:10,...extra});
-const btn = (bg,c,sm) => ({background:bg,color:c,border:'none',borderRadius:8,padding:sm?'7px 12px':'11px 16px',fontSize:sm?13:14,fontWeight:600,cursor:'pointer',minHeight:sm?34:44,display:'inline-flex',alignItems:'center',justifyContent:'center'});
-const chip = (bg,c) => ({background:bg,color:c,borderRadius:6,padding:'2px 8px',fontSize:12,fontWeight:700,flexShrink:0,display:'inline-block'});
+  const testSel = i => { if (ts.fb==='ok'||ts.fb==='w2') return; setTs(p=>({...p,sel:i})); };
+  const testCheck = () => {
+    if (ts.sel===null||ts.fb==='ok'||ts.fb==='w2') return;
+    const q = ts.qs[ts.cur];
+    if (ts.sel===q.c) { setTs(p=>({...p, fb:'ok', res:[...p.res,{correct:true,q,sel:p.sel}]})); }
+    else if (ts.att===0) { setTs(p=>({...p, fb:'w1', att:1, sel:null})); }
+    else { setTs(p=>({...p, fb:'w2', res:[...p.res,{correct:false,q,sel:p.sel}]})); }
+  };
+  const testNext = () => {
+    if (ts.cur===4) { setTs(p=>({...p,fb:'done'})); }
+    else { setTs(p=>({...p,cur:p.cur+1,att:0,sel:null,fb:null})); }
+  };
 
-// ── HOME ─────────────────────────────────────────────────────────────────────
-if (screen==='home') return (
-  <div style={root}>
-    <div style={{...hdr,justifyContent:'space-between',flexWrap:'wrap',gap:8}}>
-      <span style={{fontWeight:800,fontSize:17,letterSpacing:-0.5}}>⚗️ Chemiecursus 6e jaar</span>
-      <div style={{display:'flex',gap:5}}>
-        {['CHE1','CHE2'].map(c=>(
-          <button key={c} onClick={()=>setCourse(c)} style={{
-            ...btn(course===c?P.txt:P.muted,course===c?P.card:P.soft,true),
-            border:`1px solid ${course===c?P.txt:P.bdr}`,
-          }}>{c}</button>
-        ))}
+  const chapTitle = chId==='H3' ? 'Zuren en Basen' : 'Redoxevenwichten';
+
+  // ── STYLES ────────────────────────────────────────────────
+  const root = {
+    minHeight:'100dvh',height:'100dvh',
+    background:P.paper,
+    backgroundImage:`radial-gradient(circle at 20% 20%, ${P.paperLight} 0%, transparent 60%), radial-gradient(circle at 80% 80%, ${P.paperLight} 0%, transparent 50%)`,
+    fontFamily:FONT_S,
+    display:'flex',flexDirection:'column',overflow:'hidden',
+    color:P.ink,fontSize:15,position:'relative',
+  };
+  const headerBar = {
+    padding:'10px 16px 8px',
+    flexShrink:0,
+    display:'flex',flexDirection:'column',alignItems:'center',gap:2,
+    borderBottom:`3px double ${P.rule}`,
+    background:P.paper,
+    position:'relative',
+  };
+  const body = {flex:1,overflowY:'auto',padding:'14px 18px 36px',position:'relative'};
+
+  // Double-rule section header
+  const doubleHeader = (num,title) => (
+    <div style={{margin:'10px 0 14px',textAlign:'center'}}>
+      <div style={{borderTop:`1px solid ${P.rule}`,borderBottom:`1px solid ${P.rule}`,height:3,marginBottom:8}} />
+      <div style={{fontFamily:FONT_S,fontSize:14,letterSpacing:1.5,textTransform:'uppercase',color:P.ink,fontWeight:700}}>
+        <span style={{color:P.sepia,fontStyle:'italic',fontWeight:400,marginRight:6}}>§ {num}</span>
+        {title}
+      </div>
+      <div style={{borderTop:`1px solid ${P.rule}`,borderBottom:`1px solid ${P.rule}`,height:3,marginTop:8}} />
+    </div>
+  );
+
+  // Subheader (smaller, single rule with caps)
+  const subHeader = label => (
+    <div style={{margin:'18px 0 8px',display:'flex',alignItems:'center',gap:10}}>
+      <span style={{fontFamily:FONT_S,fontSize:10,letterSpacing:3,textTransform:'uppercase',color:P.sepia,fontWeight:700,fontStyle:'italic'}}>— {label} —</span>
+      <div style={{flex:1,borderTop:`1px solid ${P.margin}`,opacity:0.5}}/>
+    </div>
+  );
+
+  const btn = (active=false,sm=false) => ({
+    background:active?P.ink:'transparent',
+    color:active?P.paper:P.ink,
+    border:`1px solid ${P.rule}`,
+    borderRadius:0,
+    padding:sm?'5px 10px':'8px 14px',
+    fontSize:sm?12:13,
+    fontFamily:FONT_S,
+    fontWeight:500,
+    letterSpacing:0.5,
+    cursor:'pointer',
+    textTransform:'uppercase',
+    minHeight:sm?28:36,
+    display:'inline-flex',alignItems:'center',justifyContent:'center',gap:6,
+  });
+
+  // ── KEYFRAMES & GLOBAL STYLES ────────────────────────────
+  const styleTag = (
+    <style>{`
+      @keyframes inkSplat {
+        0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity: 0.85; }
+        70%  { opacity: 0.5; }
+        100% { transform: translate(var(--dx), var(--dy)) scale(0.2) rotate(var(--rot)); opacity: 0; }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .ink-particle { animation: inkSplat 0.95s cubic-bezier(.2,.7,.4,1) forwards; }
+      .paper-fade   { animation: fadeIn 0.45s ease-out both; }
+      body { background: ${P.paper}; }
+      *::-webkit-scrollbar { width: 8px; }
+      *::-webkit-scrollbar-track { background: ${P.paper}; }
+      *::-webkit-scrollbar-thumb { background: ${P.margin}; border-radius: 0; }
+    `}</style>
+  );
+
+  const particlesLayer = (
+    <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:50,overflow:'hidden'}}>
+      {particles.map(p=>(
+        <span key={p.id} className="ink-particle" style={{
+          position:'absolute',left:'50%',top:'50%',
+          width:p.size,height:p.size,borderRadius:'50%',
+          background:P.sepia,
+          ['--dx']:`${p.dx}px`,
+          ['--dy']:`${p.dy}px`,
+          ['--rot']:`${p.rot}deg`,
+          animationDelay:`${p.delay}ms`,
+        }}/>
+      ))}
+    </div>
+  );
+
+  // School-header masthead
+  const masthead = (
+    <div style={headerBar}>
+      <div style={{fontFamily:FONT_S,fontSize:10,letterSpacing:4,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>
+        Sint-Jan Berchmanscollege · Antwerpen
+      </div>
+      <div style={{fontFamily:FONT_S,fontSize:18,fontWeight:700,letterSpacing:2,color:P.ink,marginTop:1}}>
+        SJCA <span style={{color:P.sepia,fontWeight:400}}>·</span> Chemie 6<sup>e</sup> middelbaar
+      </div>
+      <div style={{fontFamily:FONT_S,fontSize:10,fontStyle:'italic',color:P.faded,letterSpacing:1.5,marginTop:1}}>
+        — Vol. I, no. 1 · anno {new Date().getFullYear()} —
       </div>
     </div>
-    <div style={body}>
-      <p style={{color:P.soft,fontSize:13,margin:'0 0 14px',lineHeight:1.5}}>
-        Kies een hoofdstuk · {course==='CHE1'?'Sommige secties zijn CHE2-only':'Alle secties beschikbaar'}
-      </p>
-      {[
-        {id:'H3',icon:'🧪',t:'H3 — Zuren en Basen',col:P.H3},
-        {id:'H4',icon:'⚡',t:'H4 — Redoxevenwichten',col:P.H4},
-      ].map(ch=>{
-        const n = SEC[ch.id].filter(s=>course==='CHE2'||s.c1).length;
-        return (
-          <div key={ch.id} onClick={()=>goChap(ch.id)} style={{
-            ...card({border:`1px solid ${ch.col.bdr}`,background:ch.col.tint,cursor:'pointer',padding:18}),
-          }}>
-            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
-              <span style={{fontSize:26}}>{ch.icon}</span>
-              <span style={{fontWeight:800,fontSize:18,color:ch.col.acc,letterSpacing:-0.5}}>{ch.t}</span>
-            </div>
-            <div style={{color:P.soft,fontSize:13,marginBottom:12}}>
-              {n} secties &nbsp;·&nbsp; formularium &nbsp;·&nbsp; test (5 vragen)
-            </div>
-            <span style={chip(ch.col.chip,ch.col.acc)}>Tap om te openen →</span>
-          </div>
-        );
-      })}
-    </div>
-  </div>
-);
+  );
 
-// ── CHAPTER ───────────────────────────────────────────────────────────────────
-if (screen==='chapter') return (
-  <div style={root}>
-    <div style={hdr}>
-      <button onClick={goHome} style={btn(P.muted,P.txt,true)}>← Home</button>
-      <span style={{fontWeight:700,fontSize:15,color:col.acc}}>{chId==='H3'?'H3 Zuren en Basen':'H4 Redoxevenwichten'}</span>
-    </div>
-    <div style={body}>
-      {secs.map(s=>{
-        const locked = course==='CHE1' && !s.c1;
-        return (
-          <div key={s.id} onClick={()=>!locked&&goSec(chId,s.id)} style={{
-            display:'flex',alignItems:'center',padding:'13px 14px',
-            borderRadius:10,marginBottom:6,
-            border:`1px solid ${locked?P.bdr:col.bdr}`,
-            background:locked?P.muted:P.card,
-            opacity:locked?0.6:1,
-            cursor:locked?'default':'pointer',
-            gap:12,minHeight:56,
-          }}>
-            <div style={chip(col.chip,col.acc)}>{s.id}</div>
-            <div style={{flex:1}}>
-              <div style={{fontWeight:600,fontSize:14}}>{s.t}</div>
-              <div style={{color:P.soft,fontSize:12,marginTop:1}} dangerouslySetInnerHTML={{__html:s.sub}} />
-            </div>
-            {locked && <span style={chip('#e7e5e0',P.soft)}>CHE2</span>}
-            {!locked && <span style={{color:P.soft,fontSize:12}}>›</span>}
-          </div>
-        );
-      })}
-
-      {chId==='H4' && course==='CHE2' && (
-        <>
-          <div style={{height:1,background:P.bdr,margin:'8px 0'}} />
-          <div onClick={goComp} style={{
-            display:'flex',alignItems:'center',padding:'13px 14px',
-            borderRadius:10,marginBottom:6,
-            border:`1px solid ${P.vio.bdr}`,background:P.vio.tint,
-            cursor:'pointer',gap:12,minHeight:56,
-          }}>
-            <div style={chip(P.vio.chip,P.vio.acc)}>⚡</div>
-            <div style={{flex:1}}>
-              <div style={{fontWeight:600,fontSize:14,color:P.vio.acc}}>Galvanische cel vs Elektrolyse</div>
-              <div style={{color:P.soft,fontSize:12}}>Vergelijkingstabel</div>
-            </div>
-            <span style={{color:P.vio.acc,fontSize:12}}>›</span>
-          </div>
-        </>
-      )}
-
-      <div style={{height:1,background:P.bdr,margin:'10px 0'}} />
-      <div onClick={()=>goForm(chId)} style={{
-        display:'flex',alignItems:'center',padding:'13px 14px',
-        borderRadius:10,marginBottom:6,
-        border:`1px solid ${P.bdr}`,background:P.card,cursor:'pointer',gap:12,minHeight:56,
-      }}>
-        <span style={{fontSize:20}}>📐</span>
-        <span style={{fontWeight:600,fontSize:14}}>Formularium {chId}</span>
-        <span style={{color:P.soft,fontSize:12,marginLeft:'auto'}}>›</span>
-      </div>
-      <div onClick={()=>goTest(chId)} style={{
-        display:'flex',alignItems:'center',padding:'13px 14px',
-        borderRadius:10,marginBottom:6,
-        border:`1px solid ${P.vio.bdr}`,background:P.vio.tint,cursor:'pointer',gap:12,minHeight:56,
-      }}>
-        <span style={{fontSize:20}}>🧪</span>
-        <span style={{fontWeight:600,fontSize:14,color:P.vio.acc}}>Test jezelf — 5 vragen</span>
-        <span style={{color:P.vio.acc,fontSize:12,marginLeft:'auto'}}>›</span>
-      </div>
-    </div>
-  </div>
-);
-
-// ── SECTION ───────────────────────────────────────────────────────────────────
-if (screen==='section' && sec) return (
-  <div style={root}>
-    <div style={hdr}>
-      <button onClick={()=>goChap(chId)} style={btn(P.muted,P.txt,true)}>← {chId}</button>
-      <span style={{fontWeight:700,fontSize:14,color:col.acc,overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{sec.id} {sec.t}</span>
-    </div>
-    <div style={body}>
-      {/* Theory */}
-      <div style={card({borderColor:col.bdr,background:col.tint})}>
-        <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:col.acc,marginBottom:10}}>Theorie</div>
-        {sec.th.map((b,i)=>(
-          <div key={i} style={{display:'flex',gap:8,marginBottom:7}}>
-            <span style={{color:col.acc,flexShrink:0,fontWeight:700}}>•</span>
-            <span style={{fontSize:13,lineHeight:1.6}} dangerouslySetInnerHTML={{__html:b}} />
-          </div>
-        ))}
-      </div>
-
-      {/* Formulas */}
-      <div style={card({borderColor:col.bdr,background:col.tint})}>
-        <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:col.acc,marginBottom:8}}>Formules</div>
-        <div style={{fontFamily:"'Courier New',monospace",fontSize:13,lineHeight:1.9,background:P.card,borderRadius:8,padding:12,border:`1px solid ${col.bdr}`}}
-          dangerouslySetInnerHTML={{__html:sec.fm.replace(/\n/g,'<br>')}} />
-      </div>
-
-      {/* Exercises */}
-      <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:P.soft,margin:'14px 0 8px'}}>Oefeningen</div>
-      {sec.exo.map((ex,i)=>{
-        const k=`${chId}_${sec.id}_${i}`;
-        const isOpen=open[k];
-        const st=STAR[ex.s];
-        return (
-          <div key={k} style={card({borderColor:st.c,marginBottom:8})}>
-            <span style={{...chip(st.bg,st.c),marginBottom:8,display:'inline-block'}}>{st.lbl}</span>
-            <div style={{fontSize:13,lineHeight:1.65,marginBottom:10}} dangerouslySetInnerHTML={{__html:ex.q}} />
-            <button onClick={()=>toggle(k)} style={{
-              ...btn(isOpen?P.muted:col.tint,isOpen?P.txt:col.acc,true),
-              border:`1px solid ${col.bdr}`,width:'100%',textAlign:'left',
-            }}>
-              {isOpen?'▲ Verberg antwoord':'▼ Toon antwoord + uitleg'}
-            </button>
-            {isOpen && (
-              <div style={{marginTop:10,padding:12,background:P.ok.bg,borderRadius:8,border:'1px solid #bbf7d0',fontSize:13,lineHeight:1.7}}
-                dangerouslySetInnerHTML={{__html:ex.a}} />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  </div>
-);
-
-// ── FORMULARIUM ───────────────────────────────────────────────────────────────
-if (screen==='formularium') {
-  const fd = FORM[chId];
-  return (
+  // ── HOME ──────────────────────────────────────────────────
+  if (screen==='home') return (
     <div style={root}>
-      <div style={hdr}>
-        <button onClick={()=>goChap(chId)} style={btn(P.muted,P.txt,true)}>← {chId}</button>
-        <span style={{fontWeight:700,fontSize:14,color:col.acc}}>📐 Formularium {chId}</span>
-      </div>
-      <div style={body}>
-        <div style={card({borderColor:col.bdr,background:col.tint})}>
-          <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:col.acc,marginBottom:12}}>Formules</div>
-          {fd.fmls.map((f,i)=>(
-            <div key={i} style={{display:'flex',alignItems:'baseline',gap:12,marginBottom:7,padding:'6px 10px',background:P.card,borderRadius:8}}>
-              <span style={{color:P.soft,fontSize:11,minWidth:95,flexShrink:0}}>{f.n}</span>
-              <span style={{fontFamily:"'Courier New',monospace",fontSize:13}} dangerouslySetInnerHTML={{__html:f.f}} />
-            </div>
-          ))}
+      {styleTag}{particlesLayer}
+      {masthead}
+      <div style={body} className="paper-fade">
+        <div style={{textAlign:'center',marginTop:8,marginBottom:16}}>
+          <div style={{fontStyle:'italic',color:P.faded,fontSize:13,letterSpacing:0.5}}>
+            een verhandeling over zuren, basen en redoxevenwichten
+          </div>
         </div>
 
-        {fd.tabs.map((tab,ti)=>(
-          <div key={ti} style={card({overflowX:'auto',padding:0})}>
-            <div style={{padding:'10px 14px',fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:P.soft,borderBottom:`1px solid ${P.bdr}`}}>{tab.title}</div>
-            <table style={{width:'100%',borderCollapse:'collapse',fontSize:13}}>
-              <thead>
-                <tr>{tab.heads.map((h,hi)=>(
-                  <th key={hi} style={{textAlign:'left',padding:'7px 12px',background:col.chip,color:col.acc,borderBottom:`2px solid ${col.bdr}`,fontWeight:700,fontSize:12}}
-                    dangerouslySetInnerHTML={{__html:h}} />
-                ))}</tr>
-              </thead>
-              <tbody>
-                {tab.rows.map((row,ri)=>(
-                  <tr key={ri} style={{background:ri%2===0?P.card:P.muted}}>
-                    {row.map((cell,ci)=>(
-                      <td key={ci} style={{padding:'7px 12px',borderBottom:`1px solid ${P.bdr}`}}
-                        dangerouslySetInnerHTML={{__html:cell}} />
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
+        {doubleHeader('','Inhoudstafel')}
 
-        <div style={card({borderColor:col.bdr,background:col.tint})}>
-          <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:col.acc,marginBottom:8}}>Gebruik van de tabellen</div>
-          <div style={{fontSize:13,lineHeight:1.7}} dangerouslySetInnerHTML={{__html:fd.usage}} />
+        <div style={{display:'flex',gap:6,justifyContent:'center',margin:'10px 0 18px'}}>
+          {['CHE1','CHE2'].map(c=>(
+            <button key={c} onClick={()=>setCourse(c)} style={btn(course===c,true)}>{c}</button>
+          ))}
+        </div>
+        <div style={{textAlign:'center',color:P.faded,fontSize:12,fontStyle:'italic',marginBottom:18}}>
+          {course==='CHE1'?'CHE1 — enkele secties zijn enkel in CHE2 beschikbaar':'CHE2 — alle secties beschikbaar'}
+        </div>
+
+        {[
+          {id:'H3',roman:'Caput I',t:'Zuren en Basen',sym:'⚗'},
+          {id:'H4',roman:'Caput II',t:'Redoxevenwichten',sym:'⚡'},
+        ].map(ch=>{
+          const n = SEC[ch.id].filter(s=>course==='CHE2'||s.c1).length;
+          return (
+            <div key={ch.id} onClick={()=>goChap(ch.id)} style={{
+              cursor:'pointer',
+              border:`1px solid ${P.rule}`,
+              borderTop:`3px double ${P.rule}`,
+              borderBottom:`3px double ${P.rule}`,
+              padding:'18px 16px',
+              marginBottom:14,
+              background:P.paperLight,
+              position:'relative',
+            }}>
+              <div style={{position:'absolute',top:6,right:10,fontSize:10,fontStyle:'italic',color:P.sepia,letterSpacing:1}}>
+                {ch.roman}
+              </div>
+              <div style={{display:'flex',alignItems:'center',gap:14}}>
+                <span style={{fontSize:32,color:P.sepia,fontFamily:FONT_S}}>{ch.sym}</span>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:22,fontWeight:700,color:P.ink,letterSpacing:0.5}}>{ch.t}</div>
+                  <div style={{fontSize:12,color:P.faded,fontStyle:'italic',marginTop:4,letterSpacing:0.5}}>
+                    {n} secties · formularium · vraagstelling (5 items)
+                  </div>
+                </div>
+                <span style={{color:P.sepia,fontSize:20,fontStyle:'italic'}}>›</span>
+              </div>
+            </div>
+          );
+        })}
+
+        <div style={{marginTop:24,padding:14,border:`1px solid ${P.margin}`,borderTop:`3px double ${P.margin}`,fontSize:11,fontStyle:'italic',color:P.faded,lineHeight:1.8,textAlign:'center'}}>
+          ❦ &nbsp; Studeer met aandacht. Verifieer elk antwoord. &nbsp; ❦
         </div>
       </div>
     </div>
   );
-}
 
-// ── TEST ─────────────────────────────────────────────────────────────────────
-if (screen==='test' && ts) {
-  // ── Results ──
-  if (ts.fb==='done') {
-    const score = ts.res.filter(r=>r.correct).length;
-    const txt = score===5?'🎉 Perfect!':score>=4?'👍 Heel goed!':score>=3?'😊 Goed gedaan!':'📚 Nog wat oefenen!';
+  // ── CHAPTER ──────────────────────────────────────────────
+  if (screen==='chapter') return (
+    <div style={root}>
+      {styleTag}{particlesLayer}
+      {masthead}
+      <div style={{padding:'8px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${P.margin}`,background:P.paper,flexShrink:0}}>
+        <button onClick={goHome} style={btn(false,true)}>← Inhoudstafel</button>
+        <span style={{flex:1,textAlign:'right',fontSize:11,letterSpacing:2,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>{chId==='H3'?'Caput I':'Caput II'}</span>
+      </div>
+      <div style={body} className="paper-fade">
+        {doubleHeader('',chapTitle)}
+
+        {secs.map(s=>{
+          const locked = course==='CHE1' && !s.c1;
+          return (
+            <div key={s.id} onClick={()=>!locked&&goSec(chId,s.id)} style={{
+              display:'flex',alignItems:'baseline',gap:14,
+              padding:'12px 6px',
+              borderBottom:`1px dotted ${P.margin}`,
+              cursor:locked?'default':'pointer',
+              opacity:locked?0.45:1,
+            }}>
+              <span style={{fontFamily:FONT_M,fontSize:13,color:P.sepia,minWidth:42,fontWeight:700}}>§ {s.id}</span>
+              <div style={{flex:1}}>
+                <div style={{fontWeight:600,fontSize:15,color:P.ink,letterSpacing:0.3}}>{s.t}</div>
+                <div style={{fontStyle:'italic',color:P.faded,fontSize:12,marginTop:1}} dangerouslySetInnerHTML={{__html:s.sub}} />
+              </div>
+              {locked && <span style={{fontSize:10,fontStyle:'italic',color:P.faded,letterSpacing:1}}>CHE2 only</span>}
+              {!locked && <span style={{color:P.sepia,fontSize:14}}>›</span>}
+            </div>
+          );
+        })}
+
+        {chId==='H4' && course==='CHE2' && (
+          <div onClick={goComp} style={{
+            marginTop:16,padding:'12px 14px',
+            border:`1px solid ${P.rule}`,
+            borderTop:`3px double ${P.rule}`,
+            borderBottom:`3px double ${P.rule}`,
+            background:P.paperLight,
+            cursor:'pointer',display:'flex',alignItems:'center',gap:12,
+          }}>
+            <span style={{fontSize:18,color:P.sepia}}>⚔</span>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600,fontSize:14}}>Galvanisch vs Elektrolytisch</div>
+              <div style={{fontStyle:'italic',fontSize:11,color:P.faded}}>Vergelijkende tabel — appendix</div>
+            </div>
+            <span style={{color:P.sepia}}>›</span>
+          </div>
+        )}
+
+        {subHeader('Hulpstukken')}
+        <div onClick={()=>goForm(chId)} style={{
+          padding:'12px 14px',
+          border:`1px solid ${P.rule}`,
+          background:P.paperLight,
+          cursor:'pointer',display:'flex',alignItems:'center',gap:12,marginBottom:8,
+        }}>
+          <span style={{fontSize:18,color:P.sepia}}>📐</span>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:600,fontSize:14}}>Formularium</div>
+            <div style={{fontStyle:'italic',fontSize:11,color:P.faded}}>Formules en tabellen</div>
+          </div>
+          <span style={{color:P.sepia}}>›</span>
+        </div>
+        <div onClick={()=>goTest(chId)} style={{
+          padding:'12px 14px',
+          border:`1px solid ${P.rule}`,
+          background:P.paperLight,
+          cursor:'pointer',display:'flex',alignItems:'center',gap:12,
+        }}>
+          <span style={{fontSize:18,color:P.sepia}}>✎</span>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:600,fontSize:14}}>Vraagstelling</div>
+            <div style={{fontStyle:'italic',fontSize:11,color:P.faded}}>Vijf willekeurige vragen ter toetsing</div>
+          </div>
+          <span style={{color:P.sepia}}>›</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── SECTION ──────────────────────────────────────────────
+  if (screen==='section' && sec) return (
+    <div style={root}>
+      {styleTag}{particlesLayer}
+      {masthead}
+      <div style={{padding:'8px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${P.margin}`,background:P.paper,flexShrink:0}}>
+        <button onClick={()=>goChap(chId)} style={btn(false,true)}>← {chapTitle}</button>
+        <span style={{flex:1,textAlign:'right',fontSize:11,letterSpacing:2,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>§ {sec.id}</span>
+      </div>
+      <div style={body} className="paper-fade">
+        {doubleHeader(sec.id,sec.t)}
+
+        <div style={{textAlign:'center',fontStyle:'italic',color:P.faded,fontSize:13,marginBottom:14,letterSpacing:0.3}}
+          dangerouslySetInnerHTML={{__html:sec.sub}}/>
+
+        {/* Extended theory paragraph */}
+        {TH_EXT[sec.id] && (
+          <p style={{
+            fontSize:14,lineHeight:1.75,textAlign:'justify',
+            textIndent:'1.4em',margin:'0 0 14px',color:P.ink,
+          }} dangerouslySetInnerHTML={{__html:TH_EXT[sec.id]}}/>
+        )}
+
+        {/* Theorie bullets */}
+        {subHeader('Kernpunten')}
+        <div style={{paddingLeft:6}}>
+          {sec.th.map((b,i)=>(
+            <div key={i} style={{display:'flex',gap:10,marginBottom:8,fontSize:13.5,lineHeight:1.65}}>
+              <span style={{color:P.sepia,flexShrink:0,fontWeight:700,fontFamily:FONT_S}}>{['i.','ii.','iii.','iv.','v.','vi.'][i]||'·'}</span>
+              <span dangerouslySetInnerHTML={{__html:b}}/>
+            </div>
+          ))}
+        </div>
+
+        {/* Galvanic cell SVG for 4.4 */}
+        {sec.id==='4.4' && (
+          <>
+            {subHeader('Schema — galvanische cel')}
+            <div style={{
+              border:`1px solid ${P.margin}`,
+              background:P.paperLight,
+              padding:'12px 8px 8px',
+            }}>
+              <GalvanicCell/>
+              <div style={{textAlign:'center',fontStyle:'italic',fontSize:11,color:P.faded,marginTop:6,letterSpacing:0.4}}>
+                Fig. 1 — Daniell-cel: Zn-anode (−) en Cu-kathode (+), verbonden via externe geleider en zoutbrug.
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Formules */}
+        {subHeader('Formules')}
+        <div style={{
+          fontFamily:FONT_M,fontSize:13,lineHeight:1.9,
+          background:P.paperLight,
+          border:`1px solid ${P.margin}`,
+          padding:'10px 14px',
+          color:P.ink,
+        }} dangerouslySetInnerHTML={{__html:sec.fm.replace(/\n/g,'<br>')}}/>
+
+        {/* Stappenplan (uitklapbaar) */}
+        {STEPS[sec.id] && (
+          <>
+            {subHeader('Werkwijze')}
+            <div style={{border:`1px solid ${P.margin}`,background:P.paperLight}}>
+              <div onClick={()=>setStepsOpen(o=>!o)} style={{
+                padding:'10px 14px',cursor:'pointer',
+                display:'flex',alignItems:'center',gap:10,
+                borderBottom:stepsOpen?`1px solid ${P.margin}`:'none',
+              }}>
+                <span style={{color:P.sepia,fontStyle:'italic',fontSize:13,fontWeight:600,letterSpacing:0.5,flex:1}}>
+                  Stappenplan voor de oefeningen
+                </span>
+                <span style={{color:P.sepia,fontSize:14,fontFamily:FONT_M}}>{stepsOpen?'▾':'▸'}</span>
+              </div>
+              {stepsOpen && (
+                <ol style={{margin:0,padding:'10px 14px 12px 30px',fontSize:13,lineHeight:1.7,color:P.ink}}>
+                  {STEPS[sec.id].map((s,i)=>(
+                    <li key={i} style={{marginBottom:6}}>
+                      <span dangerouslySetInnerHTML={{__html:s}}/>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          </>
+        )}
+
+        {/* Oefeningen */}
+        {subHeader('Oefeningen')}
+        {sec.exo.map((ex,i)=>{
+          const k=`${chId}_${sec.id}_${i}`;
+          const isOpen=open[k];
+          const st=STAR[ex.s];
+          return (
+            <div key={k} style={{
+              borderTop:`1px solid ${P.margin}`,
+              borderBottom:`1px solid ${P.margin}`,
+              padding:'12px 4px',marginBottom:10,
+              background:P.paperLight,
+              paddingLeft:14,paddingRight:14,
+            }}>
+              <div style={{display:'flex',alignItems:'baseline',gap:10,marginBottom:6}}>
+                <span style={{fontFamily:FONT_M,fontSize:11,color:P.faded,fontWeight:700}}>nr. {i+1}.</span>
+                <span style={{fontStyle:'italic',fontSize:11,color:st.c,letterSpacing:0.5,fontWeight:st.bold?700:500}}>{st.lbl}</span>
+              </div>
+              <div style={{fontSize:13.5,lineHeight:1.7,marginBottom:10,color:P.ink}}
+                dangerouslySetInnerHTML={{__html:ex.q}}/>
+              <button onClick={()=>toggle(k)} style={{
+                background:'transparent',
+                color:P.sepia,
+                border:`1px solid ${P.sepia}`,
+                borderRadius:0,
+                padding:'6px 12px',
+                fontSize:11,
+                fontFamily:FONT_S,
+                fontStyle:'italic',
+                letterSpacing:1,
+                textTransform:'uppercase',
+                cursor:'pointer',
+                width:'100%',textAlign:'center',
+              }}>
+                {isOpen?'— verberg oplossing —':'— toon oplossing —'}
+              </button>
+              {isOpen && (
+                <div style={{
+                  marginTop:10,padding:'10px 12px',
+                  background:P.paper,
+                  border:`1px solid ${P.margin}`,
+                  borderLeft:`3px double ${P.sepia}`,
+                  fontSize:13,lineHeight:1.75,color:P.ink,
+                }} dangerouslySetInnerHTML={{__html:ex.a}}/>
+              )}
+            </div>
+          );
+        })}
+
+        <div style={{textAlign:'center',marginTop:20,fontStyle:'italic',color:P.faded,fontSize:11,letterSpacing:2}}>
+          ❦ &nbsp; einde van §{sec.id} &nbsp; ❦
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── FORMULARIUM ──────────────────────────────────────────
+  if (screen==='formularium') {
+    const fd = FORM[chId];
     return (
       <div style={root}>
-        <div style={hdr}>
-          <button onClick={()=>goChap(chId)} style={btn(P.muted,P.txt,true)}>← {chId}</button>
-          <span style={{fontWeight:700,fontSize:14,color:P.vio.acc}}>🧪 Resultaat</span>
+        {styleTag}{particlesLayer}
+        {masthead}
+        <div style={{padding:'8px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${P.margin}`,background:P.paper,flexShrink:0}}>
+          <button onClick={()=>goChap(chId)} style={btn(false,true)}>← {chapTitle}</button>
+          <span style={{flex:1,textAlign:'right',fontSize:11,letterSpacing:2,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>Appendix · Formularium</span>
         </div>
-        <div style={body}>
-          <div style={card({background:P.vio.tint,borderColor:P.vio.bdr,textAlign:'center',padding:24})}>
-            <div style={{fontSize:42,marginBottom:6}}>{score>=4?'🎉':score>=3?'👍':'📚'}</div>
-            <div style={{fontSize:36,fontWeight:800,color:P.vio.acc}}>{score}/5</div>
-            <div style={{color:P.soft,marginTop:4,fontSize:14}}>{txt}</div>
+        <div style={body} className="paper-fade">
+          {doubleHeader('App.',`Formularium — ${chapTitle}`)}
+
+          {subHeader('Formules')}
+          <div style={{border:`1px solid ${P.margin}`,background:P.paperLight,padding:'4px 0'}}>
+            {fd.fmls.map((f,i)=>(
+              <div key={i} style={{
+                display:'flex',alignItems:'baseline',gap:12,
+                padding:'8px 14px',
+                borderBottom:i<fd.fmls.length-1?`1px dotted ${P.margin}`:'none',
+              }}>
+                <span style={{fontStyle:'italic',color:P.sepia,fontSize:12,minWidth:110,flexShrink:0}}>{f.n}</span>
+                <span style={{fontFamily:FONT_M,fontSize:13,color:P.ink}} dangerouslySetInnerHTML={{__html:f.f}}/>
+              </div>
+            ))}
           </div>
 
-          <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:P.soft,margin:'14px 0 8px'}}>Overzicht</div>
-          {ts.res.map((r,i)=>(
-            <div key={i} style={card({borderColor:r.correct?'#bbf7d0':'#fecaca',background:r.correct?P.ok.bg:P.err.bg,marginBottom:8})}>
-              <div style={{display:'flex',gap:8,alignItems:'flex-start'}}>
-                <span style={{fontSize:16,flexShrink:0}}>{r.correct?'✅':'❌'}</span>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:12,fontWeight:600,marginBottom:4,lineHeight:1.5}} dangerouslySetInnerHTML={{__html:r.q.q}} />
-                  {!r.correct && <div style={{fontSize:12,color:P.err.txt,marginBottom:2}}>Jouw antwoord: <b dangerouslySetInnerHTML={{__html:r.q.o[r.sel]}} /></div>}
-                  {!r.correct && <div style={{fontSize:12,color:P.ok.txt,marginBottom:2}}>Correct: <b dangerouslySetInnerHTML={{__html:r.q.o[r.q.c]}} /></div>}
-                  {!r.correct && <div style={{fontSize:12,color:P.soft,fontStyle:'italic'}} dangerouslySetInnerHTML={{__html:r.q.e}} />}
-                </div>
+          {fd.tabs.map((tab,ti)=>(
+            <div key={ti}>
+              {subHeader(tab.title.replace(/<[^>]+>/g,''))}
+              <div style={{overflowX:'auto',border:`1px solid ${P.margin}`,background:P.paperLight}}>
+                <table style={{width:'100%',borderCollapse:'collapse',fontSize:13,fontFamily:FONT_S}}>
+                  <thead>
+                    <tr>{tab.heads.map((h,hi)=>(
+                      <th key={hi} style={{
+                        textAlign:'left',padding:'8px 12px',
+                        borderBottom:`3px double ${P.rule}`,
+                        background:P.paperDark,
+                        color:P.ink,fontStyle:'italic',fontWeight:700,fontSize:12,letterSpacing:0.5,
+                      }} dangerouslySetInnerHTML={{__html:h}}/>
+                    ))}</tr>
+                  </thead>
+                  <tbody>
+                    {tab.rows.map((row,ri)=>(
+                      <tr key={ri}>
+                        {row.map((cell,ci)=>(
+                          <td key={ci} style={{
+                            padding:'7px 12px',
+                            borderBottom:`1px dotted ${P.margin}`,
+                            fontFamily:ci===0?FONT_S:FONT_M,
+                            color:P.ink,
+                          }} dangerouslySetInnerHTML={{__html:cell}}/>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           ))}
 
-          <div style={{display:'flex',gap:8,marginTop:12}}>
-            <button onClick={()=>goTest(chId)} style={{...btn(P.vio.acc,P.card),flex:1}}>Opnieuw spelen</button>
-            <button onClick={()=>goChap(chId)} style={{...btn(P.muted,P.txt),flex:1}}>← {chId}</button>
-          </div>
+          {subHeader('Gebruik van de tabellen')}
+          <p style={{
+            fontSize:13,lineHeight:1.75,textAlign:'justify',
+            textIndent:'1.4em',
+            border:`1px solid ${P.margin}`,
+            borderLeft:`3px double ${P.sepia}`,
+            background:P.paperLight,
+            padding:'10px 14px',margin:0,
+          }} dangerouslySetInnerHTML={{__html:fd.usage}}/>
         </div>
       </div>
     );
   }
 
-  // ── Active question ──
-  const q = ts.qs[ts.cur];
-  return (
-    <div style={root}>
-      <div style={hdr}>
-        <button onClick={()=>goChap(chId)} style={btn(P.muted,P.txt,true)}>← {chId}</button>
-        <span style={{fontWeight:700,fontSize:14,color:P.vio.acc}}>🧪 Test {chId}</span>
-      </div>
-      {/* Progress */}
-      <div style={{height:4,background:P.muted,flexShrink:0}}>
-        <div style={{height:'100%',background:P.vio.acc,width:`${(ts.res.length/5)*100}%`,transition:'width 0.3s'}} />
-      </div>
-      <div style={{padding:'3px 14px',background:P.card,fontSize:12,color:P.soft,flexShrink:0,borderBottom:`1px solid ${P.bdr}`}}>
-        Vraag {ts.cur+1} van 5
-      </div>
-      <div style={body}>
-        {ts.fb==='w1' && (
-          <div style={{padding:'10px 14px',background:P.err.bg,border:'1px solid #fecaca',borderRadius:8,color:P.err.txt,marginBottom:10,fontWeight:600,fontSize:13}}>
-            ✗ Fout! Probeer opnieuw.
+  // ── TEST ─────────────────────────────────────────────────
+  if (screen==='test' && ts) {
+    // Resultaat
+    if (ts.fb==='done') {
+      const score = ts.res.filter(r=>r.correct).length;
+      const verdict = score===5?'Eximia cum laude — perfect!':score>=4?'Magna cum laude — uitstekend!':score>=3?'Cum laude — goed werk!':'Satisfecit — verdere studie aangewezen.';
+      return (
+        <div style={root}>
+          {styleTag}{particlesLayer}
+          {masthead}
+          <div style={{padding:'8px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${P.margin}`,background:P.paper,flexShrink:0}}>
+            <button onClick={()=>goChap(chId)} style={btn(false,true)}>← {chapTitle}</button>
+            <span style={{flex:1,textAlign:'right',fontSize:11,letterSpacing:2,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>Resultaat</span>
           </div>
-        )}
-        {ts.fb==='w2' && (
-          <div style={{padding:'10px 14px',background:P.err.bg,border:'1px solid #fecaca',borderRadius:8,marginBottom:10}}>
-            <div style={{color:P.err.txt,fontWeight:600,fontSize:13,marginBottom:5}}>✗ Niet correct.</div>
-            <div style={{fontSize:13}}>Correct: <b dangerouslySetInnerHTML={{__html:q.o[q.c]}} /></div>
-            <div style={{fontSize:12,color:P.soft,marginTop:4,fontStyle:'italic'}} dangerouslySetInnerHTML={{__html:q.e}} />
-          </div>
-        )}
-        {ts.fb==='ok' && (
-          <div style={{padding:'10px 14px',background:P.ok.bg,border:'1px solid #bbf7d0',borderRadius:8,color:P.ok.txt,marginBottom:10,fontWeight:600,fontSize:13}}>
-            ✓ Correct!
-          </div>
-        )}
+          <div style={body} className="paper-fade">
+            {doubleHeader('','Beoordeling')}
+            <div style={{
+              textAlign:'center',padding:'18px 16px',
+              border:`1px solid ${P.rule}`,
+              borderTop:`3px double ${P.rule}`,
+              borderBottom:`3px double ${P.rule}`,
+              background:P.paperLight,marginBottom:18,
+            }}>
+              <div style={{fontFamily:FONT_M,fontSize:48,fontWeight:700,color:P.sepia,letterSpacing:2}}>{score}/5</div>
+              <div style={{fontStyle:'italic',color:P.faded,fontSize:13,marginTop:6,letterSpacing:0.5}}>{verdict}</div>
+            </div>
 
-        <div style={card()}>
-          <div style={{fontSize:14,lineHeight:1.7,fontWeight:500}} dangerouslySetInnerHTML={{__html:q.q}} />
+            {subHeader('Overzicht')}
+            {ts.res.map((r,i)=>(
+              <div key={i} style={{
+                border:`1px solid ${P.margin}`,
+                borderLeft:`3px double ${r.correct?P.ok:P.err}`,
+                background:r.correct?P.okBg:P.errBg,
+                padding:'10px 14px',marginBottom:8,
+              }}>
+                <div style={{display:'flex',gap:8,alignItems:'baseline',marginBottom:4}}>
+                  <span style={{fontFamily:FONT_M,fontSize:13,color:r.correct?P.ok:P.err,fontWeight:700}}>{r.correct?'✓':'✗'}</span>
+                  <span style={{fontFamily:FONT_M,fontSize:11,color:P.faded}}>vraag {i+1}.</span>
+                </div>
+                <div style={{fontSize:13,lineHeight:1.6,marginBottom:4}} dangerouslySetInnerHTML={{__html:r.q.q}}/>
+                {!r.correct && (
+                  <>
+                    <div style={{fontSize:12,color:P.err,marginBottom:2}}><i>Uw antwoord:</i> <span dangerouslySetInnerHTML={{__html:r.q.o[r.sel]}}/></div>
+                    <div style={{fontSize:12,color:P.ok,marginBottom:2}}><i>Juist:</i> <span dangerouslySetInnerHTML={{__html:r.q.o[r.q.c]}}/></div>
+                    <div style={{fontSize:12,color:P.faded,fontStyle:'italic',marginTop:4}} dangerouslySetInnerHTML={{__html:r.q.e}}/>
+                  </>
+                )}
+              </div>
+            ))}
+
+            <div style={{display:'flex',gap:8,marginTop:14}}>
+              <button onClick={()=>goTest(chId)} style={{...btn(true),flex:1}}>Opnieuw afleggen</button>
+              <button onClick={()=>goChap(chId)} style={{...btn(false),flex:1}}>← {chapTitle}</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const q = ts.qs[ts.cur];
+    return (
+      <div style={root}>
+        {styleTag}{particlesLayer}
+        {masthead}
+        <div style={{padding:'8px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${P.margin}`,background:P.paper,flexShrink:0}}>
+          <button onClick={()=>goChap(chId)} style={btn(false,true)}>← {chapTitle}</button>
+          <span style={{flex:1,textAlign:'right',fontSize:11,letterSpacing:2,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>Vraagstelling · {ts.cur+1}/5</span>
+        </div>
+        <div style={{height:2,background:P.paperDark,flexShrink:0,borderBottom:`1px solid ${P.margin}`}}>
+          <div style={{height:'100%',background:P.sepia,width:`${(ts.res.length/5)*100}%`,transition:'width 0.3s'}}/>
+        </div>
+        <div style={body} className="paper-fade">
+          {doubleHeader(`${ts.cur+1}/5`,'Quaestio')}
+
+          {ts.fb==='w1' && (
+            <div style={{padding:'10px 14px',background:P.errBg,border:`1px solid ${P.err}`,borderLeft:`3px double ${P.err}`,color:P.err,marginBottom:12,fontStyle:'italic',fontSize:13}}>
+              ✗ Niet correct — probeer een tweede maal.
+            </div>
+          )}
+          {ts.fb==='w2' && (
+            <div style={{padding:'10px 14px',background:P.errBg,border:`1px solid ${P.err}`,borderLeft:`3px double ${P.err}`,marginBottom:12}}>
+              <div style={{color:P.err,fontStyle:'italic',fontSize:13,marginBottom:4}}>✗ Helaas niet juist.</div>
+              <div style={{fontSize:13}}>Het juiste antwoord: <b dangerouslySetInnerHTML={{__html:q.o[q.c]}}/></div>
+              <div style={{fontSize:12,color:P.faded,marginTop:6,fontStyle:'italic'}} dangerouslySetInnerHTML={{__html:q.e}}/>
+            </div>
+          )}
+          {ts.fb==='ok' && (
+            <div style={{padding:'10px 14px',background:P.okBg,border:`1px solid ${P.ok}`,borderLeft:`3px double ${P.ok}`,color:P.ok,marginBottom:12,fontStyle:'italic',fontSize:13}}>
+              ✓ Optime — correct!
+            </div>
+          )}
+
+          <div style={{
+            padding:'14px 16px',
+            border:`1px solid ${P.margin}`,
+            borderTop:`3px double ${P.rule}`,
+            borderBottom:`3px double ${P.rule}`,
+            background:P.paperLight,
+            marginBottom:14,
+          }}>
+            <div style={{fontSize:14.5,lineHeight:1.7,color:P.ink}} dangerouslySetInnerHTML={{__html:q.q}}/>
+          </div>
+
+          {q.o.map((opt,i)=>{
+            const isSel = ts.sel===i;
+            const isCorr = (ts.fb==='ok'||ts.fb==='w2') && i===q.c;
+            const isWrong = ts.fb==='w2' && isSel && i!==q.c;
+            let bg=P.paperLight, bdr=P.margin, c=P.ink;
+            if (isCorr) { bg=P.okBg; bdr=P.ok; c=P.ok; }
+            else if (isWrong) { bg=P.errBg; bdr=P.err; c=P.err; }
+            else if (isSel) { bg=P.paperDark; bdr=P.ink; c=P.ink; }
+            return (
+              <div key={i} onClick={()=>testSel(i)} style={{
+                padding:'10px 14px',marginBottom:8,
+                border:`1px solid ${bdr}`,
+                borderLeft:`3px ${isCorr||isWrong||isSel?'double':'solid'} ${bdr}`,
+                background:bg,color:c,
+                cursor:(ts.fb==='ok'||ts.fb==='w2')?'default':'pointer',
+                display:'flex',alignItems:'baseline',gap:12,fontSize:13.5,lineHeight:1.55,
+              }}>
+                <span style={{fontFamily:FONT_M,fontWeight:700,minWidth:18,color:c}}>
+                  {['a)','b)','c)','d)'][i]}
+                </span>
+                <span dangerouslySetInnerHTML={{__html:opt}}/>
+              </div>
+            );
+          })}
+
+          {(ts.fb===null||ts.fb==='w1') && (
+            <button onClick={testCheck} disabled={ts.sel===null} style={{
+              ...btn(ts.sel!==null),width:'100%',marginTop:8,
+              opacity:ts.sel===null?0.4:1,
+              cursor:ts.sel===null?'default':'pointer',
+            }}>Controleren</button>
+          )}
+          {(ts.fb==='ok'||ts.fb==='w2') && (
+            <button onClick={testNext} style={{...btn(true),width:'100%',marginTop:8}}>
+              {ts.cur===4?'Naar de beoordeling →':'Volgende quaestio →'}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── COMPARE ──────────────────────────────────────────────
+  if (screen==='compare') return (
+    <div style={root}>
+      {styleTag}{particlesLayer}
+      {masthead}
+      <div style={{padding:'8px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:`1px solid ${P.margin}`,background:P.paper,flexShrink:0}}>
+        <button onClick={()=>goChap('H4')} style={btn(false,true)}>← Redoxevenwichten</button>
+        <span style={{flex:1,textAlign:'right',fontSize:11,letterSpacing:2,textTransform:'uppercase',color:P.sepia,fontStyle:'italic'}}>Appendix · Vergelijking</span>
+      </div>
+      <div style={body} className="paper-fade">
+        {doubleHeader('App.','Galvanisch vs Elektrolytisch')}
+
+        <p style={{
+          fontSize:13.5,lineHeight:1.75,textAlign:'justify',
+          textIndent:'1.4em',marginBottom:14,color:P.ink,
+        }}>
+          De twee typen elektrochemische cellen onderscheiden zich vooral door de richting van de energieomzetting en, daaruit volgend, door de omkering van de pooltekens. De onderstaande tabel zet de eigenschappen synoptisch naast elkaar.
+        </p>
+
+        <div style={{overflowX:'auto',border:`1px solid ${P.margin}`,background:P.paperLight}}>
+          <table style={{width:'100%',borderCollapse:'collapse',fontSize:13,fontFamily:FONT_S}}>
+            <thead>
+              <tr>
+                <th style={{padding:'9px 12px',textAlign:'left',borderBottom:`3px double ${P.rule}`,background:P.paperDark,color:P.faded,fontStyle:'italic',fontSize:11,letterSpacing:1,fontWeight:700,textTransform:'uppercase'}}>Eigenschap</th>
+                <th style={{padding:'9px 12px',textAlign:'left',borderBottom:`3px double ${P.rule}`,background:P.paperDark,color:P.ink,fontSize:12,fontWeight:700,fontStyle:'italic'}}>Galvanische cel</th>
+                <th style={{padding:'9px 12px',textAlign:'left',borderBottom:`3px double ${P.rule}`,background:P.paperDark,color:P.sepia,fontSize:12,fontWeight:700,fontStyle:'italic'}}>Elektrolytische cel</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARE.map((row,i)=>(
+                <tr key={i}>
+                  <td style={{padding:'9px 12px',fontWeight:600,borderBottom:`1px dotted ${P.margin}`,color:P.faded,fontSize:12,fontStyle:'italic'}}>{row.r}</td>
+                  <td style={{padding:'9px 12px',borderBottom:`1px dotted ${P.margin}`,color:P.ink}} dangerouslySetInnerHTML={{__html:row.g}}/>
+                  <td style={{padding:'9px 12px',borderBottom:`1px dotted ${P.margin}`,color:P.sepia}} dangerouslySetInnerHTML={{__html:row.e}}/>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        {q.o.map((opt,i)=>{
-          const isSel = ts.sel===i;
-          const isCorr = (ts.fb==='ok'||ts.fb==='w2') && i===q.c;
-          const isWrong = ts.fb==='w2' && isSel && i!==q.c;
-          let bg=P.card, bdr=P.bdr, c=P.txt;
-          if (isCorr) { bg=P.ok.bg; bdr='#86efac'; c=P.ok.txt; }
-          else if (isWrong) { bg=P.err.bg; bdr='#fca5a5'; c=P.err.txt; }
-          else if (isSel) { bg=P.vio.tint; bdr=P.vio.acc; c=P.vio.acc; }
-          return (
-            <div key={i} onClick={()=>testSel(i)} style={{
-              padding:'11px 14px',marginBottom:7,borderRadius:10,
-              border:`2px solid ${bdr}`,background:bg,color:c,
-              cursor:(ts.fb==='ok'||ts.fb==='w2')?'default':'pointer',
-              display:'flex',alignItems:'center',gap:10,fontSize:13,lineHeight:1.5,
-              minHeight:48,transition:'border-color 0.15s, background 0.15s',
-            }}>
-              <span style={{fontWeight:800,minWidth:18,color:c===P.txt?P.vio.acc:c}}>
-                {['A','B','C','D'][i]}
-              </span>
-              <span dangerouslySetInnerHTML={{__html:opt}} />
-            </div>
-          );
-        })}
+        {subHeader('Memorandum')}
+        <div style={{
+          border:`1px solid ${P.margin}`,
+          borderLeft:`3px double ${P.sepia}`,
+          background:P.paperLight,
+          padding:'12px 14px',
+          fontSize:13.5,lineHeight:1.75,
+        }}>
+          <p style={{margin:'0 0 6px'}}><i style={{color:P.sepia}}>Galvanisch:</i> de cel IS de stroombron. De anode is negatief (−), omdat oxidatie elektronen wegduwt naar de externe kring.</p>
+          <p style={{margin:0}}><i style={{color:P.sepia}}>Elektrolyse:</i> de cel VERBRUIKT stroom. De externe spanningsbron keert de pooltekens om — anode wordt positief (+).</p>
+        </div>
 
-        {(ts.fb===null||ts.fb==='w1') && (
-          <button onClick={testCheck} disabled={ts.sel===null} style={{
-            ...btn(ts.sel!==null?P.vio.acc:P.muted, ts.sel!==null?P.card:P.soft),
-            width:'100%',marginTop:4,opacity:ts.sel===null?0.6:1,
-          }}>Controleer</button>
-        )}
-        {(ts.fb==='ok'||ts.fb==='w2') && (
-          <button onClick={testNext} style={{...btn(P.vio.acc,P.card),width:'100%',marginTop:4}}>
-            {ts.cur===4?'Resultaat bekijken →':'Volgende vraag →'}
-          </button>
-        )}
+        <div style={{textAlign:'center',marginTop:20,fontStyle:'italic',color:P.faded,fontSize:11,letterSpacing:2}}>
+          ❦ &nbsp; einde van de appendix &nbsp; ❦
+        </div>
       </div>
     </div>
   );
-}
 
-// ── COMPARE ───────────────────────────────────────────────────────────────────
-if (screen==='compare') return (
-  <div style={root}>
-    <div style={hdr}>
-      <button onClick={()=>goChap('H4')} style={btn(P.muted,P.txt,true)}>← H4</button>
-      <span style={{fontWeight:700,fontSize:14,color:P.vio.acc}}>⚡ Galvanisch vs Elektrolytisch</span>
-    </div>
-    <div style={body}>
-      <div style={{fontSize:13,color:P.soft,marginBottom:12,lineHeight:1.5}}>
-        De twee typen elektrochemische cellen vergeleken. Let op de omgekeerde pooltekens!
-      </div>
-      <div style={card({padding:0,overflowX:'auto'})}>
-        <table style={{width:'100%',borderCollapse:'collapse',fontSize:13}}>
-          <thead>
-            <tr>
-              <th style={{padding:'9px 12px',textAlign:'left',borderBottom:`2px solid ${P.bdr}`,background:P.muted,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:P.soft}}>Eigenschap</th>
-              <th style={{padding:'9px 12px',textAlign:'left',borderBottom:`2px solid ${P.H4.bdr}`,background:P.H4.chip,color:P.H4.acc,fontSize:12,fontWeight:700}}>⚡ Galvanische cel</th>
-              <th style={{padding:'9px 12px',textAlign:'left',borderBottom:`2px solid ${P.vio.bdr}`,background:P.vio.chip,color:P.vio.acc,fontSize:12,fontWeight:700}}>🔌 Elektrolytische cel</th>
-            </tr>
-          </thead>
-          <tbody>
-            {COMPARE.map((row,i)=>(
-              <tr key={i} style={{background:i%2===0?P.card:P.muted}}>
-                <td style={{padding:'9px 12px',fontWeight:600,borderBottom:`1px solid ${P.bdr}`,color:P.soft,fontSize:12}}>{row.r}</td>
-                <td style={{padding:'9px 12px',borderBottom:`1px solid ${P.bdr}`,color:P.H4.acc,fontWeight:500}} dangerouslySetInnerHTML={{__html:row.g}} />
-                <td style={{padding:'9px 12px',borderBottom:`1px solid ${P.bdr}`,color:P.vio.acc,fontWeight:500}} dangerouslySetInnerHTML={{__html:row.e}} />
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div style={card({borderColor:P.H4.bdr,background:P.H4.tint,marginTop:8})}>
-        <div style={{fontWeight:700,fontSize:11,textTransform:'uppercase',letterSpacing:1,color:P.H4.acc,marginBottom:8}}>Geheugensteuntje</div>
-        <div style={{fontSize:13,lineHeight:1.7}}>
-          <b style={{color:P.H4.acc}}>Galvanisch:</b> de cel IS de stroombron. Anode = negatief (−), want oxidatie stuwt elektronen weg.<br/>
-          <b style={{color:P.vio.acc}}>Elektrolyse:</b> de cel VERBRUIKT stroom. Externe bron keert de pooltekens om: anode = positief (+).
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-return null;
+  return null;
 }
