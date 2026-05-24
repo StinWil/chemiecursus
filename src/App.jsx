@@ -1263,6 +1263,79 @@ const SUMM = {
 ],
 };
 
+// ── VEELGEMAAKTE FOUTEN (uit examenanalyse 6CHE2) ─────────────────────────────
+const MISTAKES = {
+'1.1':['"Volume" als beïnvloedende factor noemen i.p.v. concentratie (−0,5)','Energiediagram-assen onbenoemd laten staan (−0,5)'],
+'1.2':['Vergelijkend experiment: parameters niet geïsoleerd (één-variabele-regel)','"Recht evenredig" verband stellen bij Mg+HCl terwijl v ~ [HCl]<sup>2</sup>'],
+'1.3':['Katalysator "verandert ΔH/ΔU" — fout: katalysator wijzigt alleen E<sub>a</sub>','Maxwell-Boltzmann: verkeerde oppervlakteverhouding bij T<sub>2</sub>'],
+'1.4':['Snelheidswet uit experimentele tabel: verkeerde orde in H<sup>+</sup> afleiden','Intermediair en overgangscomplex verwarren'],
+'1.5':['MC: v = k·[A]·[B]<sup>3</sup>, verdubbeling [B] geeft <b>8×</b> (niet 2×)','Enzym blijft werken bij hoge T denken — denatureert > 40°C'],
+'2.1':['Co/Cl-evenwicht: "blauw bij regen" denken — correct is roze ([H<sub>2</sub>O] ↑ verschuift naar links)','"Concentraties gelijk bij evenwicht" denken — fout, alleen <i>constant</i>'],
+'2.2':['<b>Vaste stof opnemen in K<sub>c</sub>-uitdrukking</b> (klassieker, −0,5 op 3 punten)','Eenheid mol/L i.p.v. mol bij eindantwoord (−0,5)','K<sub>c</sub>-eenheid hangt af van Δn — niet automatisch mol/L'],
+'2.3':['Q<sub>c</sub> verwarren met K<sub>c</sub> — Q gebruikt actuele, K is evenwichtswaarde'],
+'2.4':['Katalysator "verschuift evenwicht" denken — fout, alleen snelheid verandert','Volume-effect: mol-aantallen aan beide kanten niet vergelijken'],
+'2.5':['ICE: vergeten stoichiometrische coëfficiënt voor x (bv. 2x i.p.v. x)','Bij MC NO<sub>2</sub>↔N<sub>2</sub>O<sub>4</sub>-diagram: verkeerde mol-verhouding-curve kiezen'],
+'2.6':['Benadering x << c<sub>0</sub> gebruiken terwijl x/c<sub>0</sub> > 5% (verifieer α!)','Negatieve wortel kiezen uit kwadratische vergelijking (kies altijd positieve, fysisch zinvolle waarde)'],
+'3.1':['HCl-afbeelding met HCl-moleculen tonen — correct: enkel ionen H<sub>3</sub>O<sup>+</sup> + Cl<sup>−</sup> + H<sub>2</sub>O','Arrhenius-theorie toepassen op NH<sub>3</sub> — die past niet (geen OH-groep)'],
+'3.2':['Amfolyt "vormt gelijktijdig H<sub>3</sub>O<sup>+</sup> én OH<sup>−</sup>" — fout: het is óf óf (afhankelijk van partner)','Na<sub>2</sub>CO<sub>3</sub>-oplossing als "zuur" of "neutraal" beoordelen — correct: <b>basisch</b> via CO<sub>3</sub><sup>2−</sup>-hydrolyse','AlCl<sub>3</sub>-hydrolyse: [Al(H<sub>2</sub>O)<sub>6</sub>]<sup>3+</sup>-evenwicht niet schrijven'],
+'3.3':['Bij HNO<sub>3</sub> "volledige ionisatie" niet expliciet vermelden in uitleg','Sterk vs zwak zuur door elkaar halen — leidt tot cascadefout in pH-berekening (−3)'],
+'3.4':['pOH = −log[H<sub>3</sub>O<sup>+</sup>] schrijven i.p.v. pOH = 14 − pH (−1,5)','pH = 14 + log[OH<sup>−</sup>] of pOH = 14 − log[OH<sup>−</sup>] verwarren','pH bij 100°C ≠ 7 — K<sub>w</sub> is T-afhankelijk'],
+'3.5':['<b>H<sub>2</sub>SO<sub>4</sub>-pH: coëfficiënt 2 niet verwerken</b> ([H<sub>3</sub>O<sup>+</sup>] = 2·c<sub>0</sub>) (−3 op 4!)','Mengsel NaOH + HCl: n optellen i.p.v. aftrekken (−3)','Zwak zuur NH<sub>4</sub><sup>+</sup> behandelen als sterk zuur of zwakke base (−3)','MC Al(OH)<sub>3</sub> bij pH 12,5: waardigheid 3 vergeten in berekening'],
+'3.6':['Mg(OH)<sub>2</sub>+HNO<sub>3</sub>: geen waardigheid toepassen of verkeerde richting (×2 i.p.v. ÷2)','c<sub>1</sub>V<sub>1</sub>=c<sub>2</sub>V<sub>2</sub> gebruiken bij overmaat-mengsel (−4!) — alleen geldig bij stoichiometrische verhouding','Toevoegingsvolume niet bij V<sub>totaal</sub> tellen bij pH-berekening na titratie (−1)'],
+'3.7':['CH<sub>3</sub>COOH + HCOONa "buffer" denken — fout: verschillende geconjugeerde koppels','KOH + HCN "geen buffer" denken — fout: vormt in situ via reactie','Bij toevoeging zuur/base: eerst n aanpassen, dán Henderson-Hasselbalch toepassen'],
+'4.1':['OG zonder teken schrijven ("VI" i.p.v. "+VI") (−0,5)','Arabische cijfers gebruiken ("+6" i.p.v. "+VI") (−0,5)','OG van enkelvoudige stof ≠ 0 stellen (bv. P<sub>4</sub> als +III/+V)','H en O niet controleren bij OG-bepaling'],
+'4.2':['Mg "oxidator want brandt op" denken — correct: <b>reductor</b> (klassieker)','Diagonaalregel verkeerd toepassen (oxidans boven reductor → spontaan)'],
+'4.3':['E<sup>0</sup> vermenigvuldigen met stoichiometrische coëfficiënten — fout, E<sup>0</sup> is intensief','Formule K = 10<sup>E<sup>0</sup>·n/0,059</sup> verkeerd toepassen (−0,5)','U<sub>b</sub> = E<sup>0</sup>(kathode) − E<sup>0</sup>(anode) — niet andersom'],
+'4.4':['Aanwezige deeltjes opsommen: H<sub>2</sub>O vergeten (−0,5/fout)','Symbolische schrijfwijze: anode/kathode omwisselen (−0,5)','Symbolische schrijfwijze: metaal en oplossing omwisselen (−0,5)','Zoutbrug-functie: "verplaatsing van elektronen" kiezen — fout, het zijn <b>ionen</b>','Cu/Al-cel: "koperelektrode lost op" — fout, Cu is kathode (geen verbruik)'],
+'4.5':['Elektrolyse Mg(NO<sub>3</sub>)<sub>2</sub>(aq): Mg<sup>2+</sup> + 2e<sup>−</sup> → Mg kiezen — fout, water wint (H<sub>2</sub>O-reductie)','Pooltekens galvanisch/elektrolyse verwisselen — gebruik KPAN/KNAP-ezelsbrug','MC Cl<sub>2</sub>+KI: "fenolftaleïne paars" of "chloorgas ruiken" — correct: <b>zetmeel blauw/zwart</b> door I<sub>2</sub>'],
+'4.6':['Coëfficiënten globale reactie: e<sup>−</sup> niet gelijk maken vóór samenvoegen (−0,5)','KMnO<sub>4</sub>+KNO<sub>2</sub> basisch milieu: halfreacties zonder OH<sup>−</sup> balanceren (cascadefout)','In basisch milieu H<sup>+</sup> gebruiken i.p.v. OH<sup>−</sup>'],
+};
+
+// ── PREREQ (voorkennis uit 4e/5e leerjaar) ────────────────────────────────────
+const PREREQ = {
+'1.1':{from:'4e/5e', b:[
+'Concentratie c = n/V (mol/L); molaire massa M = A<sub>r</sub> in g/mol.',
+'Stoichiometrische coëfficiënten in gebalanceerde vergelijking bepalen de molverhouding.',
+]},
+'2.2':{from:'4e/5e', b:[
+'Mol-concept: n = m/M; concentratie c = n/V (mol/L).',
+'Eenheid mol/L bij oplossingen, mol bij hoeveelheden — niet verwarren.',
+'Bij gassen bij n.o.: V<sub>m</sub> = 22,4 L/mol.',
+]},
+'2.6':{from:'5e', b:[
+'Limiterend reagens identificeren via n<sub>0</sub>/Δn/n<sub>e</sub>-tabel.',
+'Rendement η = (werkelijke Δn) / (theoretisch maximale Δn) × 100%.',
+]},
+'3.1':{from:'4e', b:[
+'pH-schaal: 0–14; pH < 7 zuur, pH = 7 neutraal, pH > 7 basisch.',
+'Lage pH = hoge zuurtegraad (NIET omgekeerd).',
+'Indicatoren: lakmoes (rood/blauw), methyloranje (rood/geel), fenolftaleïne (kleurloos/roze).',
+]},
+'3.2':{from:'5e', b:[
+'Ionisatie van zuren in water: HZ + H<sub>2</sub>O → H<sub>3</sub>O<sup>+</sup> + Z<sup>−</sup> (drie deeltjes!).',
+'Auto-ionisatie water: 2H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + OH<sup>−</sup> — basis voor K<sub>w</sub>.',
+]},
+'3.5':{from:'4e', b:[
+'Verdunnen sterk zuur → pH stijgt richting 7 (niet daalt).',
+'pH = −log[H<sub>3</sub>O<sup>+</sup>]; [H<sub>3</sub>O<sup>+</sup>] = 10<sup>−pH</sup>.',
+]},
+'4.1':{from:'4e/5e', b:[
+'OG = aantal elektronen dat atoom zou opnemen (−) of afstaan (+) bij ionvorming.',
+'Notatie: Romeins cijfer met teken: +I, +II, ..., −I, −II.',
+'Vaste OG: alkalimetalen +I, aardalkalimetalen +II, F −I, O −II (peroxiden −I), H +I (hydriden −I).',
+'Som OG = 0 in neutrale verbinding; = lading in ion.',
+]},
+'4.2':{from:'4e', b:[
+'Oxidatie = OG ↑ (afgifte e<sup>−</sup>); reductie = OG ↓ (opname e<sup>−</sup>).',
+'Reductor = elektronendonor; oxidator = elektronenacceptor.',
+'OIL RIG: Oxidation Is Loss, Reduction Is Gain.',
+]},
+'4.6':{from:'4e', b:[
+'Redoxbrug: noteer OG-verandering boven elementen, balanceer aantal e<sup>−</sup>.',
+'Fe + O<sub>2</sub> → Fe<sub>2</sub>O<sub>3</sub>: totaal 12 e<sup>−</sup> uitgewisseld (klassieke valkuil).',
+]},
+};
+
 // ── KRAO / KPAN / KNAP — Nota Bene constants ─────────────────────────────────
 const KRAO = {
 title:'KRAO',
@@ -2184,6 +2257,47 @@ export default function App() {
           </>
         )}
         </>
+        )}
+
+        {/* § Voorkennis (uit lagere leerjaren) — altijd zichtbaar */}
+        {PREREQ[sec.id] && (
+          <>
+            {subHeader(`§ Voorkennis (${PREREQ[sec.id].from})`)}
+            <div style={{
+              border:`1px dotted ${P.margin}`,
+              borderLeft:`3px solid ${P.margin}`,
+              background:P.paperLight,
+              padding:'10px 14px',marginBottom:14,
+            }}>
+              <ul style={{margin:0,padding:'0 0 0 18px',fontSize:13,lineHeight:1.7,color:P.faded}}>
+                {PREREQ[sec.id].b.map((s,i)=>(
+                  <li key={i} style={{marginBottom:4}} dangerouslySetInnerHTML={{__html:s}}/>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+
+        {/* § Veelgemaakte fouten (uit examenanalyse) */}
+        {MISTAKES[sec.id] && (
+          <>
+            {subHeader('§ Veelgemaakte fouten')}
+            <div style={{
+              border:`1px solid ${P.sepia}`,
+              borderLeft:`4px solid ${P.sepia}`,
+              background:P.paper,
+              padding:'10px 14px',marginBottom:14,
+            }}>
+              <div style={{fontStyle:'italic',fontSize:10,color:P.sepia,letterSpacing:2,textTransform:'uppercase',marginBottom:6,fontWeight:700}}>
+                ⚠ Let op — fouten uit verbetersleutels
+              </div>
+              <ul style={{margin:0,padding:'0 0 0 18px',fontSize:13,lineHeight:1.7,color:P.ink}}>
+                {MISTAKES[sec.id].map((s,i)=>(
+                  <li key={i} style={{marginBottom:5}} dangerouslySetInnerHTML={{__html:s}}/>
+                ))}
+              </ul>
+            </div>
+          </>
         )}
 
         {/* Oefeningen */}
